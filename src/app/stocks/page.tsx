@@ -75,9 +75,13 @@ export default function StocksPage() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-gray-800 text-left">
-                      {['Symbol', 'Company', 'Exchange', 'Sector', 'Price', 'Change', 'News'].map((h) => (
-                        <th key={h} className={`px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide ${h === 'Price' || h === 'Change' ? 'text-right' : ''}`}>{h}</th>
-                      ))}
+                      <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Symbol</th>
+                      <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Company</th>
+                      <th className="hidden sm:table-cell px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Exchange</th>
+                      <th className="hidden md:table-cell px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Sector</th>
+                      <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide text-right">Price</th>
+                      <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide text-right">Change</th>
+                      <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">News</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -87,8 +91,8 @@ export default function StocksPage() {
                         <tr key={stock.id} className="border-b border-gray-800/50 hover:bg-gray-800/40 transition-colors">
                           <td className="px-5 py-4"><span className="font-mono font-bold text-green-400">{stock.symbol}</span></td>
                           <td className="px-5 py-4 text-gray-300">{stock.company_name}</td>
-                          <td className="px-5 py-4 text-gray-400">{stock.exchange}</td>
-                          <td className="px-5 py-4 text-gray-400">{stock.sector}</td>
+                          <td className="hidden sm:table-cell px-5 py-4 text-gray-400">{stock.exchange}</td>
+                          <td className="hidden md:table-cell px-5 py-4 text-gray-400">{stock.sector}</td>
                           <td className="px-5 py-4 text-right font-medium text-white">{formatPrice(stock.current_price)}</td>
                           <td className={`px-5 py-4 text-right font-medium ${isUp ? 'text-green-400' : 'text-red-400'}`}>
                             <div className="flex items-center justify-end gap-1">
@@ -106,6 +110,9 @@ export default function StocksPage() {
                 </table>
                 {filtered.length === 0 && <div className="text-center py-12 text-gray-400">No stocks found.</div>}
               </div>
+              <p className="sm:hidden text-xs text-gray-600 text-center py-2 border-t border-gray-800/50">
+                Scroll horizontally to see more →
+              </p>
             </div>
           </>
         )}

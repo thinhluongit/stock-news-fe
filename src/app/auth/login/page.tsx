@@ -47,7 +47,7 @@ export default function LoginPage() {
           <p className="text-sm text-gray-400">Sign in to your account</p>
         </div>
 
-        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-5 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <Input label="Email" id="email" name="email" type="email"
               value={form.email} onChange={handleChange}

@@ -46,14 +46,14 @@ export default function NewsList({ params = {} }: NewsListProps) {
 
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {articles.map((article) => <NewsCard key={article.id} article={article} />)}
       </div>
 
       {pagination && pagination.pages > 1 && (
         <div className="flex items-center justify-center gap-2 mt-10">
           <button onClick={() => handlePage(pagination.page - 1)} disabled={pagination.page === 1}
-            className="flex items-center gap-1 px-3 py-2 text-sm bg-gray-800 border border-gray-700 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
+            className="flex items-center gap-1 px-3 py-2.5 text-sm bg-gray-800 border border-gray-700 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
             <ChevronLeft size={16} /> Prev
           </button>
 
@@ -61,7 +61,7 @@ export default function NewsList({ params = {} }: NewsListProps) {
             .filter((p) => Math.abs(p - pagination.page) <= 2)
             .map((p) => (
               <button key={p} onClick={() => handlePage(p)}
-                className={`w-9 h-9 text-sm rounded-lg border transition-colors ${
+                className={`w-10 h-10 text-sm rounded-lg border transition-colors ${
                   p === pagination.page
                     ? 'bg-green-500 border-green-500 text-white font-semibold'
                     : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'
@@ -71,7 +71,7 @@ export default function NewsList({ params = {} }: NewsListProps) {
             ))}
 
           <button onClick={() => handlePage(pagination.page + 1)} disabled={pagination.page === pagination.pages}
-            className="flex items-center gap-1 px-3 py-2 text-sm bg-gray-800 border border-gray-700 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
+            className="flex items-center gap-1 px-3 py-2.5 text-sm bg-gray-800 border border-gray-700 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
             Next <ChevronRight size={16} />
           </button>
         </div>

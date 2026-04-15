@@ -60,11 +60,11 @@ export default function FeaturedNews() {
         </Link>
 
         {/* Side */}
-        <div className="lg:col-span-2 space-y-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 lg:col-span-2 gap-3">
           {rest.map((article) => (
             <Link key={article.id} href={`/news/${article.slug}`}
               className="group flex gap-3 bg-gray-900 rounded-xl border border-gray-800 hover:border-gray-700 overflow-hidden transition-colors">
-              <div className="relative w-24 flex-shrink-0 bg-gray-800">
+              <div className="relative w-24 h-24 flex-shrink-0 bg-gray-800">
                 {article.thumbnail_url ? (
                   <Image src={article.thumbnail_url} alt={article.title} fill className="object-cover" />
                 ) : (

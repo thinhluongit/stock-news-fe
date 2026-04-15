@@ -19,7 +19,7 @@ export default function Sidebar() {
   }, [dispatch]);
 
   return (
-    <aside className="space-y-6">
+    <aside className="space-y-6 lg:sticky lg:top-24">
       {/* Market Overview */}
       <div className="bg-gray-900 rounded-xl border border-gray-800 p-4">
         <h3 className="text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wide">Market Overview</h3>
