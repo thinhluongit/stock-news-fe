@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "Home",
+    "news": "News",
+    "stocks": "Stocks",
+    "markets": "Markets",
+    "analysis": "Analysis",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "search_placeholder": "Search news..."
+  },
+  "home": {
+    "latest_news": "Latest News"
+  },
+  "featured": {
+    "title": "Featured Stories",
+    "view_all": "View all"
+  },
+  "news_list": {
+    "prev": "Prev",
+    "next": "Next",
+    "no_articles": "No articles found.",
+    "loading": "Loading..."
+  },
+  "sidebar": {
+    "market_overview": "Market Overview",
+    "view_all_stocks": "View all stocks →",
+    "categories": "Categories"
+  },
+  "stocks": {
+    "title": "Stock Market",
+    "subtitle": "Track your favourite stocks",
+    "search_placeholder": "Search symbol or company...",
+    "scroll_hint": "Scroll horizontally to see more →",
+    "table": {
+      "symbol": "Symbol",
+      "company": "Company",
+      "exchange": "Exchange",
+      "sector": "Sector",
+      "price": "Price",
+      "change": "Change",
+      "news": "News",
+      "view_news": "View news",
+      "no_stocks": "No stocks found."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to your account",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign In",
+      "no_account": "Don't have an account?",
+      "signup_link": "Sign up",
+      "toast_success": "Welcome back!"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Join the bullish community",
+      "full_name": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "password_placeholder": "Min. 6 characters",
+      "confirm_password": "Confirm Password",
+      "confirm_placeholder": "Repeat your password",
+      "submit": "Create Account",
+      "has_account": "Already have an account?",
+      "login_link": "Sign in",
+      "error_password_mismatch": "Passwords do not match",
+      "error_password_short": "Password must be at least 6 characters",
+      "toast_success": "Account created! Welcome to ThanhDangBullish 🚀"
+    }
+  },
+  "footer": {
+    "description": "Your trusted source for stock market news, financial analysis, and investment insights. Stay informed. Stay bullish.",
+    "navigation": "Navigation",
+    "topics": "Topics",
+    "disclaimer": "Disclaimer: Content is for informational purposes only. Not financial advice.",
+    "all_rights": "All rights reserved.",
+    "topics_list": {
+      "market_news": "Market News",
+      "analysis": "Analysis",
+      "forex": "Forex",
+      "crypto": "Crypto",
+      "ipo": "IPO"
+    }
+  }
+}

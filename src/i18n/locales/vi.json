@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "news": "Tin tức",
+    "stocks": "Cổ phiếu",
+    "markets": "Thị trường",
+    "analysis": "Phân tích",
+    "login": "Đăng nhập",
+    "signup": "Đăng ký",
+    "logout": "Đăng xuất",
+    "search_placeholder": "Tìm kiếm tin tức..."
+  },
+  "home": {
+    "latest_news": "Tin tức mới nhất"
+  },
+  "featured": {
+    "title": "Tin nổi bật",
+    "view_all": "Xem tất cả"
+  },
+  "news_list": {
+    "prev": "Trước",
+    "next": "Tiếp",
+    "no_articles": "Không tìm thấy bài viết.",
+    "loading": "Đang tải..."
+  },
+  "sidebar": {
+    "market_overview": "Tổng quan thị trường",
+    "view_all_stocks": "Xem tất cả cổ phiếu →",
+    "categories": "Danh mục"
+  },
+  "stocks": {
+    "title": "Thị trường chứng khoán",
+    "subtitle": "Theo dõi cổ phiếu yêu thích của bạn",
+    "search_placeholder": "Tìm mã hoặc tên công ty...",
+    "scroll_hint": "Cuộn ngang để xem thêm →",
+    "table": {
+      "symbol": "Mã",
+      "company": "Công ty",
+      "exchange": "Sàn",
+      "sector": "Ngành",
+      "price": "Giá",
+      "change": "Thay đổi",
+      "news": "Tin tức",
+      "view_news": "Xem tin",
+      "no_stocks": "Không tìm thấy cổ phiếu."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Chào mừng trở lại",
+      "subtitle": "Đăng nhập vào tài khoản của bạn",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "submit": "Đăng nhập",
+      "no_account": "Chưa có tài khoản?",
+      "signup_link": "Đăng ký",
+      "toast_success": "Chào mừng trở lại!"
+    },
+    "register": {
+      "title": "Tạo tài khoản",
+      "subtitle": "Tham gia cộng đồng đầu tư",
+      "full_name": "Họ và tên",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "password_placeholder": "Tối thiểu 6 ký tự",
+      "confirm_password": "Xác nhận mật khẩu",
+      "confirm_placeholder": "Nhập lại mật khẩu",
+      "submit": "Tạo tài khoản",
+      "has_account": "Đã có tài khoản?",
+      "login_link": "Đăng nhập",
+      "error_password_mismatch": "Mật khẩu không khớp",
+      "error_password_short": "Mật khẩu phải có ít nhất 6 ký tự",
+      "toast_success": "Tạo tài khoản thành công! Chào mừng đến ThanhDangBullish 🚀"
+    }
+  },
+  "footer": {
+    "description": "Nguồn tin tức thị trường chứng khoán, phân tích tài chính và đầu tư đáng tin cậy. Luôn cập nhật. Luôn lạc quan.",
+    "navigation": "Điều hướng",
+    "topics": "Chủ đề",
+    "disclaimer": "Tuyên bố từ chối: Nội dung chỉ mang tính thông tin. Không phải tư vấn tài chính.",
+    "all_rights": "Bảo lưu mọi quyền.",
+    "topics_list": {
+      "market_news": "Tin thị trường",
+      "analysis": "Phân tích",
+      "forex": "Ngoại hối",
+      "crypto": "Tiền điện tử",
+      "ipo": "IPO"
+    }
+  }
+}

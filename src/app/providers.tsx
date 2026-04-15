@@ -3,12 +3,14 @@
 import { Provider } from 'react-redux';
 import { store } from '../store';
 import { Toaster } from 'react-hot-toast';
+import { LocaleProvider } from '../i18n/LocaleContext';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <Provider store={store}>
-      {children}
-      <Toaster
+    <LocaleProvider>
+      <Provider store={store}>
+        {children}
+        <Toaster
         position="top-right"
         toastOptions={{
           duration: 4000,
@@ -16,7 +18,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           success: { iconTheme: { primary: '#22c55e', secondary: '#fff' } },
           error:   { iconTheme: { primary: '#ef4444', secondary: '#fff' } },
         }}
-      />
-    </Provider>
+        />
+      </Provider>
+    </LocaleProvider>
   );
 }

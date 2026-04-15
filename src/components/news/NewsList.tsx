@@ -6,6 +6,7 @@ import { fetchNews } from '../../store/slices/newsSlice';
 import NewsCard from './NewsCard';
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import type { NewsParams } from '../../types';
+import { useLocale } from '../../i18n/LocaleContext';
 
 interface NewsListProps {
   params?: NewsParams;
@@ -14,6 +15,7 @@ interface NewsListProps {
 export default function NewsList({ params = {} }: NewsListProps) {
   const dispatch = useAppDispatch();
   const { articles, pagination, loading, error } = useAppSelector((s) => s.news);
+  const { t } = useLocale();
 
   useEffect(() => {
     dispatch(fetchNews({ limit: 12, ...params }));
@@ -34,7 +36,7 @@ export default function NewsList({ params = {} }: NewsListProps) {
     return (
       <div className="text-center py-20">
         <p className="text-4xl mb-4">📭</p>
-        <p className="text-gray-400">No articles found.</p>
+        <p className="text-gray-400">{t('news_list.no_articles')}</p>
       </div>
     );
   }
@@ -54,7 +56,7 @@ export default function NewsList({ params = {} }: NewsListProps) {
         <div className="flex items-center justify-center gap-2 mt-10">
           <button onClick={() => handlePage(pagination.page - 1)} disabled={pagination.page === 1}
             className="flex items-center gap-1 px-3 py-2.5 text-sm bg-gray-800 border border-gray-700 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
-            <ChevronLeft size={16} /> Prev
+            <ChevronLeft size={16} /> {t('news_list.prev')}
           </button>
 
           {Array.from({ length: pagination.pages }, (_, i) => i + 1)
@@ -72,7 +74,7 @@ export default function NewsList({ params = {} }: NewsListProps) {
 
           <button onClick={() => handlePage(pagination.page + 1)} disabled={pagination.page === pagination.pages}
             className="flex items-center gap-1 px-3 py-2.5 text-sm bg-gray-800 border border-gray-700 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
-            Next <ChevronRight size={16} />
+            {t('news_list.next')} <ChevronRight size={16} />
           </button>
         </div>
       )}

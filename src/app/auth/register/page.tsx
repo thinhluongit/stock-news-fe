@@ -9,6 +9,7 @@ import Button from "../../../components/ui/Button";
 import Input from "../../../components/ui/Input";
 import { TrendingUp } from "lucide-react";
 import toast from "react-hot-toast";
+import { useLocale } from "../../../i18n/LocaleContext";
 
 interface RegisterForm {
   full_name: string;
@@ -21,6 +22,7 @@ export default function RegisterPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { loading, error } = useAppSelector((s) => s.auth);
+  const { t } = useLocale();
   const [form, setForm] = useState<RegisterForm>({
     full_name: "",
     email: "",
@@ -38,11 +40,11 @@ export default function RegisterPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (form.password !== form.confirm) {
-      setValidationError("Passwords do not match");
+      setValidationError(t('auth.register.error_password_mismatch'));
       return;
     }
     if (form.password.length < 6) {
-      setValidationError("Password must be at least 6 characters");
+      setValidationError(t('auth.register.error_password_short'));
       return;
     }
     const result = await dispatch(
@@ -53,7 +55,7 @@ export default function RegisterPage() {
       }),
     );
     if (registerUser.fulfilled.match(result)) {
-      toast.success("Account created! Welcome to ThanhDangBullish 🚀");
+      toast.success(t('auth.register.toast_success'));
       router.push("/");
     }
   };
@@ -73,24 +75,24 @@ export default function RegisterPage() {
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-white mt-6 mb-1">
-            Create your account
+            {t('auth.register.title')}
           </h1>
-          <p className="text-sm text-gray-400">Join the bullish community</p>
+          <p className="text-sm text-gray-400">{t('auth.register.subtitle')}</p>
         </div>
 
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-5 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <Input
-              label="Full Name"
+              label={t('auth.register.full_name')}
               id="full_name"
               name="full_name"
               value={form.full_name}
               onChange={handleChange}
-              placeholder="Your full name"
+              placeholder={t('auth.register.full_name')}
               required
             />
             <Input
-              label="Email"
+              label={t('auth.register.email')}
               id="email"
               name="email"
               type="email"
@@ -101,23 +103,23 @@ export default function RegisterPage() {
               autoComplete="email"
             />
             <Input
-              label="Password *"
+              label={t('auth.register.password')}
               id="password"
               name="password"
               type="password"
               value={form.password}
               onChange={handleChange}
-              placeholder="Min. 6 characters"
+              placeholder={t('auth.register.password_placeholder')}
               required
             />
             <Input
-              label="Confirm Password"
+              label={t('auth.register.confirm_password')}
               id="confirm"
               name="confirm"
               type="password"
               value={form.confirm}
               onChange={handleChange}
-              placeholder="Repeat your password"
+              placeholder={t('auth.register.confirm_placeholder')}
               required
               error={
                 validationError && form.confirm ? validationError : undefined
@@ -136,18 +138,18 @@ export default function RegisterPage() {
               className="w-full"
               size="lg"
             >
-              Create Account
+              {t('auth.register.submit')}
             </Button>
           </form>
         </div>
 
         <p className="text-center text-sm text-gray-400 mt-6">
-          Already have an account?{" "}
+          {t('auth.register.has_account')}{" "}
           <Link
             href="/auth/login"
             className="text-green-400 hover:text-green-300 font-medium transition-colors"
           >
-            Sign in
+            {t('auth.register.login_link')}
           </Link>
         </p>
       </div>

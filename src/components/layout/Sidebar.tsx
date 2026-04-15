@@ -7,11 +7,13 @@ import { fetchStocks } from '../../store/slices/stockSlice';
 import { fetchCategories } from '../../store/slices/newsSlice';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import { formatPrice } from '../../lib/utils';
+import { useLocale } from '../../i18n/LocaleContext';
 
 export default function Sidebar() {
   const dispatch = useAppDispatch();
   const { stocks }     = useAppSelector((s) => s.stocks);
   const { categories } = useAppSelector((s) => s.news);
+  const { t } = useLocale();
 
   useEffect(() => {
     dispatch(fetchStocks());
@@ -22,7 +24,7 @@ export default function Sidebar() {
     <aside className="space-y-6 lg:sticky lg:top-24">
       {/* Market Overview */}
       <div className="bg-gray-900 rounded-xl border border-gray-800 p-4">
-        <h3 className="text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wide">Market Overview</h3>
+        <h3 className="text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wide">{t('sidebar.market_overview')}</h3>
         <div className="space-y-2">
           {stocks.slice(0, 6).map((stock) => {
             const isUp = Number(stock.price_change_pct) >= 0;
@@ -45,13 +47,13 @@ export default function Sidebar() {
           })}
         </div>
         <Link href="/stocks" className="block text-center text-xs text-green-400 hover:text-green-300 mt-3 transition-colors">
-          View all stocks →
+          {t('sidebar.view_all_stocks')}
         </Link>
       </div>
 
       {/* Categories */}
       <div className="bg-gray-900 rounded-xl border border-gray-800 p-4">
-        <h3 className="text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wide">Categories</h3>
+        <h3 className="text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wide">{t('sidebar.categories')}</h3>
         <div className="space-y-1">
           {categories.map((cat) => (
             <Link key={cat.id} href={`/news?category=${cat.slug}`}

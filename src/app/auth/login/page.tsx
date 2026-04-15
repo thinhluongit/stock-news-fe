@@ -10,11 +10,13 @@ import Input from '../../../components/ui/Input';
 import { TrendingUp } from 'lucide-react';
 import toast from 'react-hot-toast';
 import type { LoginCredentials } from '../../../types';
+import { useLocale } from '../../../i18n/LocaleContext';
 
 export default function LoginPage() {
   const dispatch = useAppDispatch();
   const router   = useRouter();
   const { loading, error } = useAppSelector((s) => s.auth);
+  const { t } = useLocale();
   const [form, setForm] = useState<LoginCredentials>({ email: '', password: '' });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +28,7 @@ export default function LoginPage() {
     e.preventDefault();
     const result = await dispatch(loginUser(form));
     if (loginUser.fulfilled.match(result)) {
-      toast.success('Welcome back!');
+      toast.success(t('auth.login.toast_success'));
       router.push('/');
     }
   };
@@ -43,16 +45,16 @@ export default function LoginPage() {
               ThanhDang<span className="text-green-400">Bullish</span>
             </span>
           </Link>
-          <h1 className="text-2xl font-bold text-white mt-6 mb-1">Welcome back</h1>
-          <p className="text-sm text-gray-400">Sign in to your account</p>
+          <h1 className="text-2xl font-bold text-white mt-6 mb-1">{t('auth.login.title')}</h1>
+          <p className="text-sm text-gray-400">{t('auth.login.subtitle')}</p>
         </div>
 
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-5 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
-            <Input label="Email" id="email" name="email" type="email"
+            <Input label={t('auth.login.email')} id="email" name="email" type="email"
               value={form.email} onChange={handleChange}
               placeholder="you@example.com" required autoComplete="email" />
-            <Input label="Password" id="password" name="password" type="password"
+            <Input label={t('auth.login.password')} id="password" name="password" type="password"
               value={form.password} onChange={handleChange}
               placeholder="••••••••" required autoComplete="current-password" />
 
@@ -63,15 +65,15 @@ export default function LoginPage() {
             )}
 
             <Button type="submit" loading={loading} className="w-full" size="lg">
-              Sign In
+              {t('auth.login.submit')}
             </Button>
           </form>
         </div>
 
         <p className="text-center text-sm text-gray-400 mt-6">
-          Don&apos;t have an account?{' '}
+          {t('auth.login.no_account')}{' '}
           <Link href="/auth/register" className="text-green-400 hover:text-green-300 font-medium transition-colors">
-            Sign up
+            {t('auth.login.signup_link')}
           </Link>
         </p>
       </div>

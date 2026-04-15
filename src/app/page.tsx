@@ -1,14 +1,12 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import Sidebar from '../components/layout/Sidebar';
 import FeaturedNews from '../components/news/FeaturedNews';
 import NewsList from '../components/news/NewsList';
 import { TrendingUp } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'ThanhDangBullish — Stock Market News & Analysis',
-};
+import { useLocale } from '../i18n/LocaleContext';
 
 const TICKERS = [
   'AAPL +1.2%', 'MSFT +0.8%', 'NVDA +3.1%', 'TSLA -1.5%',
@@ -16,6 +14,8 @@ const TICKERS = [
 ];
 
 export default function HomePage() {
+  const { t } = useLocale();
+
   return (
     <div className="min-h-screen bg-gray-950">
       <Header />
@@ -23,8 +23,8 @@ export default function HomePage() {
       {/* Ticker bar */}
       <div className="bg-gray-900 border-b border-gray-800 py-2 overflow-hidden">
         <div className="flex items-center gap-6 animate-marquee whitespace-nowrap px-4 text-xs text-gray-400">
-          {TICKERS.map((t) => (
-            <span key={t} className={`font-mono ${t.includes('-') ? 'text-red-400' : 'text-green-400'}`}>{t}</span>
+          {TICKERS.map((tick) => (
+            <span key={tick} className={`font-mono ${tick.includes('-') ? 'text-red-400' : 'text-green-400'}`}>{tick}</span>
           ))}
         </div>
       </div>
@@ -36,7 +36,7 @@ export default function HomePage() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-2 mb-6">
               <TrendingUp size={20} className="text-green-400" />
-              <h2 className="text-xl font-bold text-white">Latest News</h2>
+              <h2 className="text-xl font-bold text-white">{t('home.latest_news')}</h2>
             </div>
             <NewsList />
           </div>

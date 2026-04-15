@@ -1,22 +1,27 @@
+'use client';
+
 import Link from 'next/link';
 import { TrendingUp } from 'lucide-react';
-
-const NAV_LINKS: [string, string][] = [
-  ['/', 'Home'],
-  ['/news', 'News'],
-  ['/stocks', 'Stocks'],
-  ['/news?category=analysis', 'Analysis'],
-];
-
-const TOPICS: [string, string][] = [
-  ['market-news', 'Market News'],
-  ['analysis',    'Analysis'],
-  ['forex',       'Forex'],
-  ['crypto',      'Crypto'],
-  ['ipo',         'IPO'],
-];
+import { useLocale } from '../../i18n/LocaleContext';
 
 export default function Footer() {
+  const { t } = useLocale();
+
+  const NAV_LINKS: [string, string][] = [
+    ['/', t('nav.home')],
+    ['/news', t('nav.news')],
+    ['/stocks', t('nav.stocks')],
+    ['/news?category=analysis', t('nav.analysis')],
+  ];
+
+  const TOPICS: [string, string][] = [
+    ['market-news', t('footer.topics_list.market_news')],
+    ['analysis',    t('footer.topics_list.analysis')],
+    ['forex',       t('footer.topics_list.forex')],
+    ['crypto',      t('footer.topics_list.crypto')],
+    ['ipo',         t('footer.topics_list.ipo')],
+  ];
+
   return (
     <footer className="bg-gray-900 border-t border-gray-800 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
@@ -31,13 +36,12 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-gray-400 max-w-xs leading-relaxed">
-              Your trusted source for stock market news, financial analysis, and investment insights.
-              Stay informed. Stay bullish.
+              {t('footer.description')}
             </p>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4">Navigation</h4>
+            <h4 className="text-sm font-semibold text-white mb-4">{t('footer.navigation')}</h4>
             <ul className="space-y-2 text-sm text-gray-400">
               {NAV_LINKS.map(([href, label]) => (
                 <li key={href}>
@@ -48,7 +52,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4">Topics</h4>
+            <h4 className="text-sm font-semibold text-white mb-4">{t('footer.topics')}</h4>
             <ul className="space-y-2 text-sm text-gray-400">
               {TOPICS.map(([slug, label]) => (
                 <li key={slug}>
@@ -60,8 +64,8 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-500">&copy; {new Date().getFullYear()} ThanhDangBullish. All rights reserved.</p>
-          <p className="text-xs text-gray-600">Disclaimer: Content is for informational purposes only. Not financial advice.</p>
+          <p className="text-sm text-gray-500">&copy; {new Date().getFullYear()} ThanhDangBullish. {t('footer.all_rights')}</p>
+          <p className="text-xs text-gray-600">{t('footer.disclaimer')}</p>
         </div>
       </div>
     </footer>

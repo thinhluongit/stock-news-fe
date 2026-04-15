@@ -7,10 +7,12 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchFeaturedNews } from '../../store/slices/newsSlice';
 import { Clock, Eye, ArrowRight } from 'lucide-react';
 import { formatDateRelative } from '../../lib/utils';
+import { useLocale } from '../../i18n/LocaleContext';
 
 export default function FeaturedNews() {
   const dispatch = useAppDispatch();
   const { featuredNews } = useAppSelector((s) => s.news);
+  const { t } = useLocale();
 
   useEffect(() => {
     dispatch(fetchFeaturedNews());
@@ -23,9 +25,9 @@ export default function FeaturedNews() {
   return (
     <section className="mb-12">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-white">Featured Stories</h2>
+        <h2 className="text-xl font-bold text-white">{t('featured.title')}</h2>
         <Link href="/news?featured=true" className="text-sm text-green-400 hover:text-green-300 flex items-center gap-1 transition-colors">
-          View all <ArrowRight size={14} />
+          {t('featured.view_all')} <ArrowRight size={14} />
         </Link>
       </div>
 
