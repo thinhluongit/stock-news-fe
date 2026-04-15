@@ -93,6 +93,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        state.initialized = true;
       })
       .addCase(loginUser.rejected, rejected)
       .addCase(registerUser.pending, pending)
@@ -100,6 +101,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        state.initialized = true;
       })
       .addCase(registerUser.rejected, rejected)
       .addCase(fetchCurrentUser.pending, pending)

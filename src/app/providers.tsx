@@ -1,14 +1,29 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../store';
+import { useAppDispatch } from '../store/hooks';
+import { fetchCurrentUser } from '../store/slices/authSlice';
 import { Toaster } from 'react-hot-toast';
 import { LocaleProvider } from '../i18n/LocaleContext';
+
+function AuthBootstrap() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    // Always attempt to restore auth from token on app startup.
+    // If token is valid  → fetchCurrentUser.fulfilled sets user + initialized=true
+    // If token is missing/invalid → fetchCurrentUser.rejected clears token + initialized=true
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
+  return null;
+}
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <LocaleProvider>
       <Provider store={store}>
+        <AuthBootstrap />
         {children}
         <Toaster
         position="top-right"

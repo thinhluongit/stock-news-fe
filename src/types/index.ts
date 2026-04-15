@@ -72,3 +72,21 @@ export interface LoginCredentials {
 export interface RegisterData extends LoginCredentials {
   full_name: string;
 }
+
+export interface AdminUser {
+  id: string;
+  email: string;
+  full_name: string;
+  role: 'user' | 'editor' | 'admin';
+  is_active: boolean;
+  avatar_url?: string;
+  created_at: string;
+}
+
+export interface AdminStats {
+  users: number;
+  articles: number;
+  categories: number;
+  stocks: number;
+  totalViews: number;
+}

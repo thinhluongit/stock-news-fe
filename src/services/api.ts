@@ -55,6 +55,16 @@ export const stockApi = {
   getStockNews: (symbol: string, params?: Record<string, unknown>) => api.get(`/stocks/${symbol}/news`, { params }),
   create:       (data: unknown)                    => api.post('/stocks', data),
   updatePrice:  (symbol: string, data: unknown)    => api.patch(`/stocks/${symbol}/price`, data),
+  remove:       (symbol: string)                   => api.delete(`/stocks/${symbol}`),
+};
+
+export const adminApi = {
+  getStats:     ()                                  => api.get('/admin/stats'),
+  getUsers:     (params?: Record<string, unknown>)  => api.get('/admin/users', { params }),
+  getUser:      (id: string)                        => api.get(`/admin/users/${id}`),
+  updateUser:   (id: string, data: unknown)         => api.patch(`/admin/users/${id}`, data),
+  deleteUser:   (id: string)                        => api.delete(`/admin/users/${id}`),
+  toggleStatus: (id: string)                        => api.patch(`/admin/users/${id}/status`),
 };
 
 export default api;
