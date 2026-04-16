@@ -36,7 +36,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     dispatch(fetchAdminStats());
     dispatch(fetchAdminUsers({ limit: 5 }));
-    dispatch(fetchNews({ limit: 5, status: 'all' }));
+    dispatch(fetchNews({ limit: 5 }));
   }, [dispatch]);
 
   const statCards: { key: keyof AdminStats; label: string; icon: React.ElementType; color: string }[] = [
@@ -97,16 +97,17 @@ export default function AdminDashboard() {
               <Link href="/admin/posts" className="text-xs text-green-400 hover:text-green-300">{t('admin.actions.view_all')}</Link>
             </div>
             <div className="divide-y divide-gray-800">
-              {articles.slice(0, 5).map((a) => (
-                <div key={a.id} className="flex items-center justify-between px-5 py-3">
-                  <p className="text-sm text-white line-clamp-1 flex-1 mr-3">{a.title}</p>
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${
-                    a.status === 'published' ? 'bg-green-500/20 text-green-400'
-                    : a.status === 'draft' ? 'bg-gray-700 text-gray-400'
-                    : 'bg-yellow-500/20 text-yellow-400'
-                  }`}>{a.status}</span>
-                </div>
-              ))}
+              {articles.slice(0, 5).map((a) => {
+                const ds = (a.doc_status ?? 0) as 0 | 1 | 2;
+                const label = ['Draft', 'Published', 'Archived'][ds];
+                const color = ds === 1 ? 'bg-green-500/20 text-green-400' : ds === 0 ? 'bg-gray-700 text-gray-400' : 'bg-yellow-500/20 text-yellow-400';
+                return (
+                  <div key={a.id} className="flex items-center justify-between px-5 py-3">
+                    <p className="text-sm text-white line-clamp-1 flex-1 mr-3">{a.title}</p>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${color}`}>{label}</span>
+                  </div>
+                );
+              })}
               {articles.length === 0 && <p className="text-center text-gray-500 text-sm py-6">{t('admin.no_posts')}</p>}
             </div>
           </div>

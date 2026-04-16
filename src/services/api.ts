@@ -17,8 +17,13 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 api.interceptors.response.use(
   (res: AxiosResponse) => res,
   (err: unknown) => {
-    const status = (err as { response?: { status?: number } }).response?.status;
-    if (status === 401 && typeof window !== 'undefined') {
+    const axiosErr = err as { response?: { status?: number }; config?: { url?: string } };
+    const status = axiosErr.response?.status;
+    const url    = axiosErr.config?.url ?? '';
+    // Skip redirect for /auth/me — fetchCurrentUser.rejected already handles
+    // the "no token" case by setting initialized=true without navigating.
+    // Redirecting here would cause an infinite reload loop on public pages.
+    if (status === 401 && typeof window !== 'undefined' && !url.includes('/auth/me')) {
       localStorage.removeItem('token');
       window.location.href = '/auth/login';
     }
@@ -65,6 +70,15 @@ export const adminApi = {
   updateUser:   (id: string, data: unknown)         => api.patch(`/admin/users/${id}`, data),
   deleteUser:   (id: string)                        => api.delete(`/admin/users/${id}`),
   toggleStatus: (id: string)                        => api.patch(`/admin/users/${id}/status`),
+};
+
+export const postsApi = {
+  getAll:       (params?: Record<string, unknown>) => api.get('/posts', { params }),
+  getById:      (id: string)                       => api.get(`/posts/${id}`),
+  create:       (data: unknown)                    => api.post('/posts', data),
+  update:       (id: string, data: unknown)        => api.put(`/posts/${id}`, data),
+  updateStatus: (id: string, doc_status: 0 | 1 | 2) => api.patch(`/posts/${id}/status`, { doc_status }),
+  remove:       (id: string)                       => api.delete(`/posts/${id}`),
 };
 
 export default api;

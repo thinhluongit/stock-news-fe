@@ -1,0 +1,35 @@
+ Installed packages
+  - @editorjs/editorjs, @editorjs/header, @editorjs/list, @editorjs/quote, @editorjs/image, @editorjs/embed
+
+  Types updated (src/types/index.ts)
+  - Article.status → Article.doc_status: 0 | 1 | 2
+  - Added DOC_STATUS_LABEL and DOC_STATUS_COLORS constants
+  - NewsParams.status → NewsParams.doc_status?: number
+
+  API (src/services/api.ts)
+  - Added postsApi with getAll, getById, create, update, updateStatus, remove
+
+  Redux (src/store/slices/postsSlice.ts + src/store/index.ts)
+  - New postsSlice with thunks: fetchPosts, fetchPost, createPost, updatePost, changePostStatus
+  - Registered posts reducer in the store
+
+  EditorJS wrapper (src/components/editor/EditorBlock.tsx)
+  - All tools dynamically imported inside useEffect (SSR-safe)
+  - Exposes save(): Promise<OutputData> via forwardRef
+  - Image uploader reads JWT from localStorage and posts to /api/upload
+  - readOnly prop disables the editor and dims it visually
+
+  New dashboard area (editor + admin roles only):
+  - src/app/dashboard/layout.tsx — sidebar with My Posts / New Post links; Admin Panel link for admins only
+  - src/app/dashboard/page.tsx — redirects to /dashboard/posts
+  - src/app/dashboard/posts/page.tsx — lists own posts with status badges; published posts show "Archive & Edit" button
+  - src/app/dashboard/posts/new/page.tsx — full form (title, summary, thumbnail, category, featured toggle, stock tags,
+  EditorBlock); saves as draft
+  - src/app/dashboard/posts/[id]/edit/page.tsx — loads post, warns if published, status action bar (Publish / Archive /
+  Republish / Revert to Draft), disabled fields when published
+
+  Admin pages updated:
+  - src/app/admin/posts/page.tsx — status filter uses integer values, badges use DOC_STATUS_COLORS, status dropdown
+  changes via postsApi.updateStatus
+  - src/app/admin/posts/[id]/page.tsx — loads via postsApi.getById, docStatus: 0|1|2 state, warning banner + disabled
+  fields when published, separate save/status-change calls

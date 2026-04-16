@@ -149,7 +149,7 @@ export default function AdminUsersPage() {
                     <td className="px-4 py-3">
                       {u.role === 'admin' ? (
                         <div className="flex justify-end">
-                          <Lock size={14} className="text-gray-600" title={t('admin.user.admin_readonly')} />
+                          <span title={t('admin.user.admin_readonly')}><Lock size={14} className="text-gray-600" /></span>
                         </div>
                       ) : (
                         <div className="flex items-center justify-end gap-2">

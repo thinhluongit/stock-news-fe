@@ -5,8 +5,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { fetchCategories } from '../../../../store/slices/newsSlice';
 import { useLocale } from '../../../../i18n/LocaleContext';
-import { newsApi } from '../../../../services/api';
-import { ChevronLeft, Loader2, Trash2 } from 'lucide-react';
+import { postsApi } from '../../../../services/api';
+import { DOC_STATUS_LABEL } from '../../../../types';
+import { ChevronLeft, Loader2, Trash2, AlertTriangle } from 'lucide-react';
 import type { Article } from '../../../../types';
 
 function ConfirmDialog({ message, onConfirm, onCancel }: { message: string; onConfirm: () => void; onCancel: () => void }) {
@@ -46,13 +47,12 @@ export default function AdminPostEditPage() {
   const [content, setContent]       = useState('');
   const [thumbnail, setThumbnail]   = useState('');
   const [categoryId, setCategoryId] = useState('');
-  const [status, setStatus]         = useState<'draft' | 'published' | 'archived'>('draft');
+  const [docStatus, setDocStatus]   = useState<0 | 1 | 2>(0);
   const [isFeatured, setIsFeatured] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCategories());
-    // Fetch article by slug/id
-    newsApi.getBySlug(id!)
+    postsApi.getById(id!)
       .then((res) => {
         const data = (res.data as { data: Article }).data;
         setArticle(data);
@@ -61,25 +61,26 @@ export default function AdminPostEditPage() {
         setContent(data.content ?? '');
         setThumbnail(data.thumbnail_url ?? '');
         setCategoryId(data.category?.id ?? '');
-        setStatus(data.status as 'draft' | 'published' | 'archived');
+        setDocStatus((data.doc_status ?? 0) as 0 | 1 | 2);
         setIsFeatured(!!data.is_featured);
       })
       .catch(() => setError(t('admin.error_load')))
       .finally(() => setFetching(false));
   }, [id, dispatch, t]);
 
+  const isPublished = docStatus === 1;
+
   const handleSave = async () => {
     setSaving(true);
     setSaved(false);
     setError('');
     try {
-      await newsApi.update(id!, {
+      await postsApi.update(id!, {
         title,
         summary,
         content,
         thumbnail_url: thumbnail,
         category_id: categoryId || undefined,
-        status,
         is_featured: isFeatured,
       });
       setSaved(true);
@@ -90,9 +91,24 @@ export default function AdminPostEditPage() {
     }
   };
 
+  const handleStatusChange = async (newStatus: 0 | 1 | 2) => {
+    setSaving(true);
+    setError('');
+    try {
+      const res = await postsApi.updateStatus(id!, newStatus);
+      const updated = (res.data as { data: Article }).data;
+      setDocStatus((updated.doc_status ?? newStatus) as 0 | 1 | 2);
+      setSaved(true);
+    } catch {
+      setError(t('admin.error_load'));
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const handleDelete = async () => {
     try {
-      await newsApi.remove(id!);
+      await postsApi.remove(id!);
       router.push('/admin/posts');
     } catch {
       setError(t('admin.error_load'));
@@ -128,8 +144,19 @@ export default function AdminPostEditPage() {
         >
           <ChevronLeft size={18} />
         </button>
-        <h1 className="text-xl font-bold text-white line-clamp-1">{article?.title}</h1>
+        <h1 className="text-xl font-bold text-white line-clamp-1 flex-1">{article?.title}</h1>
+        <span className="text-xs text-gray-400">{DOC_STATUS_LABEL[docStatus]}</span>
       </div>
+
+      {/* Published warning */}
+      {isPublished && (
+        <div className="flex items-start gap-3 bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-4 py-3">
+          <AlertTriangle size={16} className="text-yellow-400 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-yellow-300">
+            This post is published. Archive it before editing content.
+          </p>
+        </div>
+      )}
 
       {error && (
         <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-400 text-sm">{error}</div>
@@ -137,6 +164,47 @@ export default function AdminPostEditPage() {
       {saved && (
         <div className="bg-green-500/10 border border-green-500/30 rounded-xl px-4 py-3 text-green-400 text-sm">{t('admin.save_success')}</div>
       )}
+
+      {/* Status action bar */}
+      <div className="flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-xl px-4 py-3">
+        <span className="text-sm text-gray-400 flex-1">Status</span>
+        {docStatus === 0 && (
+          <button
+            onClick={() => handleStatusChange(1)}
+            disabled={saving}
+            className="px-3 py-1.5 text-sm text-white bg-green-600 hover:bg-green-500 rounded-lg transition-colors disabled:opacity-50"
+          >
+            Publish
+          </button>
+        )}
+        {docStatus === 1 && (
+          <button
+            onClick={() => handleStatusChange(2)}
+            disabled={saving}
+            className="px-3 py-1.5 text-sm text-yellow-400 hover:text-white bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/20 rounded-lg transition-colors disabled:opacity-50"
+          >
+            Archive
+          </button>
+        )}
+        {docStatus === 2 && (
+          <>
+            <button
+              onClick={() => handleStatusChange(0)}
+              disabled={saving}
+              className="px-3 py-1.5 text-sm text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50"
+            >
+              Revert to Draft
+            </button>
+            <button
+              onClick={() => handleStatusChange(1)}
+              disabled={saving}
+              className="px-3 py-1.5 text-sm text-white bg-green-600 hover:bg-green-500 rounded-lg transition-colors disabled:opacity-50"
+            >
+              Republish
+            </button>
+          </>
+        )}
+      </div>
 
       <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
         {/* Title */}
@@ -146,7 +214,8 @@ export default function AdminPostEditPage() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500"
+            disabled={isPublished}
+            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -157,7 +226,8 @@ export default function AdminPostEditPage() {
             rows={3}
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 resize-y"
+            disabled={isPublished}
+            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 resize-y disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -168,7 +238,8 @@ export default function AdminPostEditPage() {
             rows={10}
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 resize-y font-mono text-xs leading-relaxed"
+            disabled={isPublished}
+            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 resize-y font-mono text-xs leading-relaxed disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -179,50 +250,36 @@ export default function AdminPostEditPage() {
             type="text"
             value={thumbnail}
             onChange={(e) => setThumbnail(e.target.value)}
+            disabled={isPublished}
             placeholder="https://..."
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500"
+            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
-        {/* Category + Status row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs text-gray-400 mb-1.5">{t('admin.post.category')}</label>
-            <select
-              value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-500"
-            >
-              <option value="">— None —</option>
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-xs text-gray-400 mb-1.5">{t('admin.post.status')}</label>
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value as 'draft' | 'published' | 'archived')}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-500"
-            >
-              <option value="draft">{t('admin.post.status_draft')}</option>
-              <option value="published">{t('admin.post.status_published')}</option>
-              <option value="archived">{t('admin.post.status_archived')}</option>
-            </select>
-          </div>
+        {/* Category */}
+        <div>
+          <label className="block text-xs text-gray-400 mb-1.5">{t('admin.post.category')}</label>
+          <select
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
+            disabled={isPublished}
+            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <option value="">— None —</option>
+            {categories.map((c) => (
+              <option key={c.id} value={c.id}>{c.name}</option>
+            ))}
+          </select>
         </div>
 
         {/* Featured toggle */}
         <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-white">{t('admin.post.is_featured')}</p>
-          </div>
+          <p className="text-sm text-white">{t('admin.post.is_featured')}</p>
           <button
             type="button"
-            onClick={() => setIsFeatured((v) => !v)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+            onClick={() => !isPublished && setIsFeatured((v) => !v)}
+            disabled={isPublished}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors disabled:cursor-not-allowed ${
               isFeatured ? 'bg-green-500' : 'bg-gray-600'
             }`}
           >
@@ -250,8 +307,8 @@ export default function AdminPostEditPage() {
           </button>
           <button
             onClick={handleSave}
-            disabled={saving}
-            className="flex items-center gap-2 px-4 py-2.5 text-sm text-white bg-green-600 hover:bg-green-500 rounded-lg transition-colors disabled:opacity-50"
+            disabled={saving || isPublished}
+            className="flex items-center gap-2 px-4 py-2.5 text-sm text-white bg-green-600 hover:bg-green-500 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving && <Loader2 size={13} className="animate-spin" />}
             {t('admin.actions.save')}

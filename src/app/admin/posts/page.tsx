@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { fetchNews } from '../../../store/slices/newsSlice';
 import { useLocale } from '../../../i18n/LocaleContext';
-import { newsApi } from '../../../services/api';
+import { newsApi, postsApi } from '../../../services/api';
+import { DOC_STATUS_LABEL, DOC_STATUS_COLORS } from '../../../types';
 import { Pencil, Trash2, Star, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 
 function ConfirmDialog({ message, onConfirm, onCancel }: { message: string; onConfirm: () => void; onCancel: () => void }) {
@@ -33,7 +34,7 @@ export default function AdminPostsPage() {
   const { articles, pagination, loading } = useAppSelector((s) => s.news);
 
   const [search, setSearch]         = useState('');
-  const [status, setStatus]         = useState('');
+  const [docStatus, setDocStatus]   = useState('');
   const [page, setPage]             = useState(1);
   const [deleteId, setDeleteId]     = useState<string | null>(null);
   const [searchDebounce, setSearchDebounce] = useState('');
@@ -44,11 +45,16 @@ export default function AdminPostsPage() {
   }, [search]);
 
   const load = useCallback(() => {
-    dispatch(fetchNews({ page, limit: 20, search: searchDebounce || undefined, status: status || 'all' }));
-  }, [dispatch, page, searchDebounce, status]);
+    dispatch(fetchNews({
+      page,
+      limit: 20,
+      search: searchDebounce || undefined,
+      doc_status: docStatus !== '' ? parseInt(docStatus) : undefined,
+    }));
+  }, [dispatch, page, searchDebounce, docStatus]);
 
   useEffect(() => { load(); }, [load]);
-  useEffect(() => { setPage(1); }, [searchDebounce, status]);
+  useEffect(() => { setPage(1); }, [searchDebounce, docStatus]);
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -66,9 +72,9 @@ export default function AdminPostsPage() {
     } catch { /* handled */ }
   };
 
-  const handleStatusChange = async (id: string, newStatus: string) => {
+  const handleStatusChange = async (id: string, newDocStatus: number) => {
     try {
-      await newsApi.update(id, { status: newStatus });
+      await postsApi.updateStatus(id, newDocStatus as 0 | 1 | 2);
       load();
     } catch { /* handled */ }
   };
@@ -98,14 +104,14 @@ export default function AdminPostsPage() {
           className="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500"
         />
         <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
+          value={docStatus}
+          onChange={(e) => setDocStatus(e.target.value)}
           className="bg-gray-900 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-green-500"
         >
           <option value="">{t('admin.all_statuses')}</option>
-          <option value="draft">{t('admin.post.status_draft')}</option>
-          <option value="published">{t('admin.post.status_published')}</option>
-          <option value="archived">{t('admin.post.status_archived')}</option>
+          <option value="0">{t('admin.post.status_draft')}</option>
+          <option value="1">{t('admin.post.status_published')}</option>
+          <option value="2">{t('admin.post.status_archived')}</option>
         </select>
       </div>
 
@@ -130,65 +136,66 @@ export default function AdminPostsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-800">
-                {articles.map((a) => (
-                  <tr key={a.id} className="hover:bg-gray-800/40 transition-colors">
-                    <td className="px-4 py-3">
-                      <p className="text-white font-medium line-clamp-1 max-w-xs">{a.title}</p>
-                      <div className="flex items-center gap-2 mt-0.5 sm:hidden">
-                        <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${
-                          a.status === 'published' ? 'bg-green-500/20 text-green-400' :
-                          a.status === 'draft'     ? 'bg-gray-700 text-gray-400' :
-                                                     'bg-yellow-500/20 text-yellow-400'
-                        }`}>{a.status}</span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-gray-400 hidden md:table-cell">{a.author?.full_name ?? '—'}</td>
-                    <td className="px-4 py-3 hidden sm:table-cell">
-                      <select
-                        value={a.status}
-                        onChange={(e) => handleStatusChange(a.id, e.target.value)}
-                        className="bg-gray-800 border border-gray-700 rounded-lg px-2 py-1 text-xs text-white focus:outline-none focus:border-green-500"
-                      >
-                        <option value="draft">{t('admin.post.status_draft')}</option>
-                        <option value="published">{t('admin.post.status_published')}</option>
-                        <option value="archived">{t('admin.post.status_archived')}</option>
-                      </select>
-                    </td>
-                    <td className="px-4 py-3 hidden lg:table-cell">
-                      <button
-                        onClick={() => handleToggleFeatured(a.id, !!a.is_featured)}
-                        className={`p-1.5 rounded-lg transition-colors ${
-                          a.is_featured
-                            ? 'text-yellow-400 hover:text-yellow-300 hover:bg-yellow-500/10'
-                            : 'text-gray-600 hover:text-gray-400 hover:bg-gray-700'
-                        }`}
-                        title={a.is_featured ? t('admin.post.yes') : t('admin.post.no')}
-                      >
-                        <Star size={14} fill={a.is_featured ? 'currentColor' : 'none'} />
-                      </button>
-                    </td>
-                    <td className="px-4 py-3 text-gray-400 hidden xl:table-cell">{(a.views ?? 0).toLocaleString()}</td>
-                    <td className="px-4 py-3 text-gray-400 text-xs hidden xl:table-cell">{formatDate(a.created_at)}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => router.push(`/admin/posts/${a.id}`)}
-                          className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
-                          title={t('admin.actions.edit')}
+                {articles.map((a) => {
+                  const ds = (a.doc_status ?? 0) as 0 | 1 | 2;
+                  return (
+                    <tr key={a.id} className="hover:bg-gray-800/40 transition-colors">
+                      <td className="px-4 py-3">
+                        <p className="text-white font-medium line-clamp-1 max-w-xs">{a.title}</p>
+                        <div className="flex items-center gap-2 mt-0.5 sm:hidden">
+                          <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${DOC_STATUS_COLORS[ds]}`}>
+                            {DOC_STATUS_LABEL[ds]}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-gray-400 hidden md:table-cell">{a.author?.full_name ?? '—'}</td>
+                      <td className="px-4 py-3 hidden sm:table-cell">
+                        <select
+                          value={ds}
+                          onChange={(e) => handleStatusChange(a.id, parseInt(e.target.value))}
+                          className="bg-gray-800 border border-gray-700 rounded-lg px-2 py-1 text-xs text-white focus:outline-none focus:border-green-500"
                         >
-                          <Pencil size={14} />
-                        </button>
+                          <option value={0}>{t('admin.post.status_draft')}</option>
+                          <option value={1}>{t('admin.post.status_published')}</option>
+                          <option value={2}>{t('admin.post.status_archived')}</option>
+                        </select>
+                      </td>
+                      <td className="px-4 py-3 hidden lg:table-cell">
                         <button
-                          onClick={() => setDeleteId(a.id)}
-                          className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
-                          title={t('admin.actions.delete')}
+                          onClick={() => handleToggleFeatured(a.id, !!a.is_featured)}
+                          className={`p-1.5 rounded-lg transition-colors ${
+                            a.is_featured
+                              ? 'text-yellow-400 hover:text-yellow-300 hover:bg-yellow-500/10'
+                              : 'text-gray-600 hover:text-gray-400 hover:bg-gray-700'
+                          }`}
+                          title={a.is_featured ? t('admin.post.yes') : t('admin.post.no')}
                         >
-                          <Trash2 size={14} />
+                          <Star size={14} fill={a.is_featured ? 'currentColor' : 'none'} />
                         </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className="px-4 py-3 text-gray-400 hidden xl:table-cell">{(a.views ?? 0).toLocaleString()}</td>
+                      <td className="px-4 py-3 text-gray-400 text-xs hidden xl:table-cell">{formatDate(a.created_at)}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => router.push(`/admin/posts/${a.id}`)}
+                            className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+                            title={t('admin.actions.edit')}
+                          >
+                            <Pencil size={14} />
+                          </button>
+                          <button
+                            onClick={() => setDeleteId(a.id)}
+                            className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                            title={t('admin.actions.delete')}
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
                 {articles.length === 0 && (
                   <tr>
                     <td colSpan={7} className="text-center text-gray-500 py-8 text-sm">{t('admin.no_posts')}</td>

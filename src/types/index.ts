@@ -40,13 +40,25 @@ export interface Article {
   author?: Pick<User, 'id' | 'full_name' | 'avatar_url'>;
   category?: Pick<Category, 'id' | 'name' | 'slug' | 'color'>;
   stocks?: Pick<Stock, 'id' | 'symbol' | 'company_name'>[];
-  status: 'draft' | 'published' | 'archived';
+  doc_status: 0 | 1 | 2;
   is_featured?: boolean;
   views?: number;
   published_at?: string;
   created_at?: string;
   updated_at?: string;
 }
+
+export const DOC_STATUS_LABEL: Record<0 | 1 | 2, string> = {
+  0: 'Draft',
+  1: 'Published',
+  2: 'Archived',
+};
+
+export const DOC_STATUS_COLORS: Record<0 | 1 | 2, string> = {
+  0: 'bg-gray-700 text-gray-400',
+  1: 'bg-green-500/20 text-green-400',
+  2: 'bg-yellow-500/20 text-yellow-400',
+};
 
 export interface Pagination {
   total: number;
@@ -59,7 +71,7 @@ export interface NewsParams {
   page?: number;
   limit?: number;
   category?: string;
-  status?: string;
+  doc_status?: number;
   search?: string;
   featured?: string;
 }
