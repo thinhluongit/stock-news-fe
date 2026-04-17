@@ -10,11 +10,11 @@ import type { Category } from '../../../types';
 
 function ConfirmDialog({ message, onConfirm, onCancel }: { message: string; onConfirm: () => void; onCancel: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 shadow-2xl">
-        <p className="text-white text-sm mb-5">{message}</p>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 dark:bg-black/60 backdrop-blur-sm">
+      <div className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 shadow-2xl">
+        <p className="text-gray-900 dark:text-white text-sm mb-5">{message}</p>
         <div className="flex gap-3 justify-end">
-          <button onClick={onCancel} className="px-4 py-2 text-sm text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
+          <button onClick={onCancel} className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">
             Cancel
           </button>
           <button onClick={onConfirm} className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-500 rounded-lg transition-colors">
@@ -118,50 +118,50 @@ export default function AdminCategoriesPage() {
         />
       )}
 
-      <h1 className="text-xl font-bold text-white">{t('admin.categories')}</h1>
+      <h1 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin.categories')}</h1>
 
       {/* Add form */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
-        <h2 className="text-sm font-semibold text-white">{t('admin.category.add_new')}</h2>
+      <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-5 space-y-4">
+        <h2 className="text-sm font-semibold text-gray-900 dark:text-white">{t('admin.category.add_new')}</h2>
         {addError && (
           <div className="bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2 text-red-400 text-xs">{addError}</div>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">{t('admin.category.name')}</label>
+            <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">{t('admin.category.name')}</label>
             <input
               type="text"
               value={addName}
               onChange={(e) => setAddName(e.target.value)}
               placeholder="Category name"
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500"
+              className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500"
             />
             {addName && (
-              <p className="text-xs text-gray-500 mt-1">Slug: <span className="text-gray-400">{slugify(addName)}</span></p>
+              <p className="text-xs text-gray-500 mt-1">Slug: <span className="text-gray-600 dark:text-gray-400">{slugify(addName)}</span></p>
             )}
           </div>
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">{t('admin.category.description')}</label>
+            <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">{t('admin.category.description')}</label>
             <input
               type="text"
               value={addDesc}
               onChange={(e) => setAddDesc(e.target.value)}
               placeholder="Optional description"
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500"
+              className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500"
             />
           </div>
         </div>
         <div className="flex items-center gap-4">
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">{t('admin.category.color')}</label>
+            <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">{t('admin.category.color')}</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
                 value={addColor}
                 onChange={(e) => setAddColor(e.target.value)}
-                className="w-9 h-9 rounded-lg border border-gray-700 bg-gray-800 cursor-pointer p-0.5"
+                className="w-9 h-9 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 cursor-pointer p-0.5"
               />
-              <span className="text-xs text-gray-400 font-mono">{addColor}</span>
+              <span className="text-xs text-gray-600 dark:text-gray-400 font-mono">{addColor}</span>
             </div>
           </div>
           <div className="flex-1 flex justify-end items-end">
@@ -178,21 +178,21 @@ export default function AdminCategoriesPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+      <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-800">
-                <th className="text-left px-4 py-3 text-gray-400 font-medium">{t('admin.category.name')}</th>
-                <th className="text-left px-4 py-3 text-gray-400 font-medium hidden sm:table-cell">{t('admin.category.slug')}</th>
-                <th className="text-left px-4 py-3 text-gray-400 font-medium">{t('admin.category.color')}</th>
-                <th className="text-left px-4 py-3 text-gray-400 font-medium hidden md:table-cell">{t('admin.category.article_count')}</th>
-                <th className="px-4 py-3 text-gray-400 font-medium text-right">Actions</th>
+              <tr className="border-b border-gray-200 dark:border-gray-800">
+                <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium">{t('admin.category.name')}</th>
+                <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium hidden sm:table-cell">{t('admin.category.slug')}</th>
+                <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium">{t('admin.category.color')}</th>
+                <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium hidden md:table-cell">{t('admin.category.article_count')}</th>
+                <th className="px-4 py-3 text-gray-600 dark:text-gray-400 font-medium text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800">
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
               {categories.map((cat) => (
-                <tr key={cat.id} className="hover:bg-gray-800/40 transition-colors">
+                <tr key={cat.id} className="hover:bg-gray-100 dark:hover:bg-gray-800/40 transition-colors">
                   {editId === cat.id ? (
                     <>
                       <td className="px-4 py-2.5" colSpan={3}>
@@ -201,20 +201,20 @@ export default function AdminCategoriesPage() {
                             type="text"
                             value={editName}
                             onChange={(e) => setEditName(e.target.value)}
-                            className="flex-1 min-w-0 bg-gray-800 border border-gray-600 rounded-lg px-2.5 py-1.5 text-sm text-white focus:outline-none focus:border-green-500"
+                            className="flex-1 min-w-0 bg-gray-100 dark:bg-gray-800 border border-gray-400 dark:border-gray-600 rounded-lg px-2.5 py-1.5 text-sm text-gray-900 dark:text-white focus:outline-none focus:border-green-500"
                           />
                           <input
                             type="text"
                             value={editDesc}
                             onChange={(e) => setEditDesc(e.target.value)}
                             placeholder="Description"
-                            className="flex-1 min-w-0 bg-gray-800 border border-gray-600 rounded-lg px-2.5 py-1.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500"
+                            className="flex-1 min-w-0 bg-gray-100 dark:bg-gray-800 border border-gray-400 dark:border-gray-600 rounded-lg px-2.5 py-1.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500"
                           />
                           <input
                             type="color"
                             value={editColor}
                             onChange={(e) => setEditColor(e.target.value)}
-                            className="w-9 h-9 rounded-lg border border-gray-700 bg-gray-800 cursor-pointer p-0.5"
+                            className="w-9 h-9 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 cursor-pointer p-0.5"
                           />
                         </div>
                       </td>
@@ -230,7 +230,7 @@ export default function AdminCategoriesPage() {
                           </button>
                           <button
                             onClick={cancelEdit}
-                            className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+                            className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
                           >
                             <X size={14} />
                           </button>
@@ -240,34 +240,34 @@ export default function AdminCategoriesPage() {
                   ) : (
                     <>
                       <td className="px-4 py-3">
-                        <span className="text-white font-medium">{cat.name}</span>
+                        <span className="text-gray-900 dark:text-white font-medium">{cat.name}</span>
                         {cat.description && (
                           <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{cat.description}</p>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-gray-400 font-mono text-xs hidden sm:table-cell">{cat.slug}</td>
+                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400 font-mono text-xs hidden sm:table-cell">{cat.slug}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
                           <span
                             className="w-4 h-4 rounded-full flex-shrink-0"
                             style={{ backgroundColor: cat.color }}
                           />
-                          <span className="text-gray-400 font-mono text-xs hidden lg:inline">{cat.color}</span>
+                          <span className="text-gray-600 dark:text-gray-400 font-mono text-xs hidden lg:inline">{cat.color}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-gray-400 hidden md:table-cell">{cat.news_count ?? 0}</td>
+                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400 hidden md:table-cell">{cat.news_count ?? 0}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => startEdit(cat)}
-                            className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+                            className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
                             title={t('admin.actions.edit')}
                           >
                             <Pencil size={14} />
                           </button>
                           <button
                             onClick={() => setDeleteId(cat.id)}
-                            className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                            className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
                             title={t('admin.actions.delete')}
                           >
                             <Trash2 size={14} />

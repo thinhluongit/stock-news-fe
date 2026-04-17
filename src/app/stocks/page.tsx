@@ -27,13 +27,13 @@ export default function StocksPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-white">{t('stocks.title')}</h1>
-            <p className="text-sm text-gray-400 mt-1">{t('stocks.subtitle')}</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('stocks.title')}</h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{t('stocks.subtitle')}</p>
           </div>
           <div className="relative w-full sm:w-64">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -41,7 +41,7 @@ export default function StocksPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder={t('stocks.search_placeholder')}
-              className="w-full bg-gray-800 text-sm text-gray-100 pl-9 pr-4 py-2.5 rounded-lg border border-gray-700 focus:outline-none focus:border-green-500"
+              className="w-full bg-gray-100 dark:bg-gray-800 text-sm text-gray-900 dark:text-gray-100 pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:border-green-500"
             />
           </div>
         </div>
@@ -56,14 +56,14 @@ export default function StocksPage() {
               {filtered.slice(0, 4).map((s) => {
                 const isUp = Number(s.price_change_pct) >= 0;
                 return (
-                  <div key={s.id} className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+                  <div key={s.id} className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-bold text-white font-mono">{s.symbol}</span>
+                      <span className="text-sm font-bold text-gray-900 dark:text-white font-mono">{s.symbol}</span>
                       {isUp
                         ? <TrendingUp size={16} className="text-green-400" />
                         : <TrendingDown size={16} className="text-red-400" />}
                     </div>
-                    <p className="text-lg font-bold text-white">{formatPrice(s.current_price)}</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white">{formatPrice(s.current_price)}</p>
                     <p className={`text-xs mt-1 ${isUp ? 'text-green-400' : 'text-red-400'}`}>
                       {isUp ? '+' : ''}{Number(s.price_change_pct).toFixed(2)}%
                     </p>
@@ -72,30 +72,30 @@ export default function StocksPage() {
               })}
             </div>
 
-            <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+            <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-800 text-left">
-                      <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">{t('stocks.table.symbol')}</th>
-                      <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">{t('stocks.table.company')}</th>
-                      <th className="hidden sm:table-cell px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">{t('stocks.table.exchange')}</th>
-                      <th className="hidden md:table-cell px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">{t('stocks.table.sector')}</th>
-                      <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide text-right">{t('stocks.table.price')}</th>
-                      <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide text-right">{t('stocks.table.change')}</th>
-                      <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">{t('stocks.table.news')}</th>
+                    <tr className="border-b border-gray-200 dark:border-gray-800 text-left">
+                      <th className="px-5 py-3 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{t('stocks.table.symbol')}</th>
+                      <th className="px-5 py-3 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{t('stocks.table.company')}</th>
+                      <th className="hidden sm:table-cell px-5 py-3 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{t('stocks.table.exchange')}</th>
+                      <th className="hidden md:table-cell px-5 py-3 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{t('stocks.table.sector')}</th>
+                      <th className="px-5 py-3 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide text-right">{t('stocks.table.price')}</th>
+                      <th className="px-5 py-3 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide text-right">{t('stocks.table.change')}</th>
+                      <th className="px-5 py-3 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{t('stocks.table.news')}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filtered.map((stock) => {
                       const isUp = Number(stock.price_change_pct) >= 0;
                       return (
-                        <tr key={stock.id} className="border-b border-gray-800/50 hover:bg-gray-800/40 transition-colors">
+                        <tr key={stock.id} className="border-b border-gray-200/80 dark:border-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800/40 transition-colors">
                           <td className="px-5 py-4"><span className="font-mono font-bold text-green-400">{stock.symbol}</span></td>
-                          <td className="px-5 py-4 text-gray-300">{stock.company_name}</td>
-                          <td className="hidden sm:table-cell px-5 py-4 text-gray-400">{stock.exchange}</td>
-                          <td className="hidden md:table-cell px-5 py-4 text-gray-400">{stock.sector}</td>
-                          <td className="px-5 py-4 text-right font-medium text-white">{formatPrice(stock.current_price)}</td>
+                          <td className="px-5 py-4 text-gray-700 dark:text-gray-300">{stock.company_name}</td>
+                          <td className="hidden sm:table-cell px-5 py-4 text-gray-600 dark:text-gray-400">{stock.exchange}</td>
+                          <td className="hidden md:table-cell px-5 py-4 text-gray-600 dark:text-gray-400">{stock.sector}</td>
+                          <td className="px-5 py-4 text-right font-medium text-gray-900 dark:text-white">{formatPrice(stock.current_price)}</td>
                           <td className={`px-5 py-4 text-right font-medium ${isUp ? 'text-green-400' : 'text-red-400'}`}>
                             <div className="flex items-center justify-end gap-1">
                               {isUp ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
@@ -110,9 +110,9 @@ export default function StocksPage() {
                     })}
                   </tbody>
                 </table>
-                {filtered.length === 0 && <div className="text-center py-12 text-gray-400">{t('stocks.table.no_stocks')}</div>}
+                {filtered.length === 0 && <div className="text-center py-12 text-gray-600 dark:text-gray-400">{t('stocks.table.no_stocks')}</div>}
               </div>
-              <p className="sm:hidden text-xs text-gray-600 text-center py-2 border-t border-gray-800/50">
+              <p className="sm:hidden text-xs text-gray-500 text-center py-2 border-t border-gray-200/80 dark:border-gray-800/50">
                 {t('stocks.scroll_hint')}
               </p>
             </div>

@@ -12,11 +12,11 @@ import type { Article } from '../../../../types';
 
 function ConfirmDialog({ message, onConfirm, onCancel }: { message: string; onConfirm: () => void; onCancel: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 shadow-2xl">
-        <p className="text-white text-sm mb-5">{message}</p>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 dark:bg-black/60 backdrop-blur-sm">
+      <div className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 shadow-2xl">
+        <p className="text-gray-900 dark:text-white text-sm mb-5">{message}</p>
         <div className="flex gap-3 justify-end">
-          <button onClick={onCancel} className="px-4 py-2 text-sm text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
+          <button onClick={onCancel} className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">
             Cancel
           </button>
           <button onClick={onConfirm} className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-500 rounded-lg transition-colors">
@@ -124,7 +124,7 @@ export default function AdminPostEditPage() {
   }
 
   if (!article && !fetching) {
-    return <p className="text-gray-400 text-sm">Post not found.</p>;
+    return <p className="text-gray-600 dark:text-gray-400 text-sm">Post not found.</p>;
   }
 
   return (
@@ -140,12 +140,12 @@ export default function AdminPostEditPage() {
       <div className="flex items-center gap-3">
         <button
           onClick={() => router.push('/admin/posts')}
-          className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+          className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
         >
           <ChevronLeft size={18} />
         </button>
-        <h1 className="text-xl font-bold text-white line-clamp-1 flex-1">{article?.title}</h1>
-        <span className="text-xs text-gray-400">{DOC_STATUS_LABEL[docStatus]}</span>
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-1 flex-1">{article?.title}</h1>
+        <span className="text-xs text-gray-600 dark:text-gray-400">{DOC_STATUS_LABEL[docStatus]}</span>
       </div>
 
       {/* Published warning */}
@@ -166,8 +166,8 @@ export default function AdminPostEditPage() {
       )}
 
       {/* Status action bar */}
-      <div className="flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-xl px-4 py-3">
-        <span className="text-sm text-gray-400 flex-1">Status</span>
+      <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl px-4 py-3">
+        <span className="text-sm text-gray-600 dark:text-gray-400 flex-1">Status</span>
         {docStatus === 0 && (
           <button
             onClick={() => handleStatusChange(1)}
@@ -191,7 +191,7 @@ export default function AdminPostEditPage() {
             <button
               onClick={() => handleStatusChange(0)}
               disabled={saving}
-              className="px-3 py-1.5 text-sm text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50"
+              className="px-3 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50"
             >
               Revert to Draft
             </button>
@@ -206,64 +206,64 @@ export default function AdminPostEditPage() {
         )}
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
+      <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-5 space-y-4">
         {/* Title */}
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">{t('admin.post.title')}</label>
+          <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">{t('admin.post.title')}</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             disabled={isPublished}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
         {/* Summary */}
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">{t('admin.post.summary')}</label>
+          <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">{t('admin.post.summary')}</label>
           <textarea
             rows={3}
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
             disabled={isPublished}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 resize-y disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500 resize-y disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
         {/* Content */}
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">{t('admin.post.content')}</label>
+          <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">{t('admin.post.content')}</label>
           <textarea
             rows={10}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             disabled={isPublished}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 resize-y font-mono text-xs leading-relaxed disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500 resize-y font-mono text-xs leading-relaxed disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
         {/* Thumbnail URL */}
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">{t('admin.post.thumbnail')}</label>
+          <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">{t('admin.post.thumbnail')}</label>
           <input
             type="text"
             value={thumbnail}
             onChange={(e) => setThumbnail(e.target.value)}
             disabled={isPublished}
             placeholder="https://..."
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
         {/* Category */}
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">{t('admin.post.category')}</label>
+          <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">{t('admin.post.category')}</label>
           <select
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
             disabled={isPublished}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <option value="">— None —</option>
             {categories.map((c) => (
@@ -274,7 +274,7 @@ export default function AdminPostEditPage() {
 
         {/* Featured toggle */}
         <div className="flex items-center justify-between">
-          <p className="text-sm text-white">{t('admin.post.is_featured')}</p>
+          <p className="text-sm text-gray-900 dark:text-white">{t('admin.post.is_featured')}</p>
           <button
             type="button"
             onClick={() => !isPublished && setIsFeatured((v) => !v)}
@@ -301,7 +301,7 @@ export default function AdminPostEditPage() {
         <div className="flex gap-3">
           <button
             onClick={() => router.push('/admin/posts')}
-            className="px-4 py-2.5 text-sm text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
+            className="px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
           >
             {t('admin.actions.cancel')}
           </button>

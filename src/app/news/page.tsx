@@ -29,7 +29,7 @@ function NewsContent() {
     <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-3">
-          <h1 className="text-2xl font-bold text-white mb-6">{title}</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{title}</h1>
           <NewsList params={params} />
         </div>
         <div className="lg:col-span-1">
@@ -42,7 +42,7 @@ function NewsContent() {
 
 export default function NewsPage() {
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <Header />
       <Suspense fallback={<div className="flex justify-center items-center py-20 text-green-400">Loading...</div>}>
         <NewsContent />

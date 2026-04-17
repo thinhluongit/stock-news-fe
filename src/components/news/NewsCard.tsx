@@ -14,13 +14,13 @@ export default function NewsCard({ article, size = 'md' }: NewsCardProps) {
 
   return (
     <Link href={`/news/${article.slug}`} className="group block">
-      <article className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden hover:border-gray-700 transition-all hover:shadow-lg hover:shadow-black/30">
-        <div className={`relative overflow-hidden ${isLg ? 'h-56' : 'h-40'} bg-gray-800`}>
+      <article className="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:border-gray-300 dark:hover:border-gray-700 transition-all hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+        <div className={`relative overflow-hidden ${isLg ? 'h-56' : 'h-40'} bg-gray-200 dark:bg-gray-800`}>
           {article.thumbnail_url ? (
             <Image src={article.thumbnail_url} alt={article.title} fill
               className="object-cover group-hover:scale-105 transition-transform duration-300" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-900">
               <span className="text-4xl">📈</span>
             </div>
           )}
@@ -33,18 +33,18 @@ export default function NewsCard({ article, size = 'md' }: NewsCardProps) {
         </div>
 
         <div className="p-4">
-          <h3 className={`font-semibold text-white group-hover:text-green-400 transition-colors line-clamp-2 mb-2 ${isLg ? 'text-lg' : 'text-sm'}`}>
+          <h3 className={`font-semibold text-gray-900 dark:text-white group-hover:text-green-400 transition-colors line-clamp-2 mb-2 ${isLg ? 'text-lg' : 'text-sm'}`}>
             {article.title}
           </h3>
 
           {article.summary && (
-            <p className="text-xs text-gray-400 line-clamp-2 mb-3">{article.summary}</p>
+            <p className="text-xs text-gray-600 dark:text-gray-400 line-clamp-2 mb-3">{article.summary}</p>
           )}
 
           <div className="flex items-center justify-between text-xs text-gray-500">
             <div className="flex items-center gap-2">
               {article.author && (
-                <span className="text-gray-400 font-medium">{article.author.full_name}</span>
+                <span className="text-gray-600 dark:text-gray-400 font-medium">{article.author.full_name}</span>
               )}
               <span className="flex items-center gap-1">
                 <Clock size={11} />{formatDateRelative(article.published_at)}
@@ -58,7 +58,7 @@ export default function NewsCard({ article, size = 'md' }: NewsCardProps) {
           {(article.stocks?.length ?? 0) > 0 && (
             <div className="flex flex-wrap gap-1 mt-3">
               {article.stocks!.slice(0, 3).map((s) => (
-                <span key={s.id} className="text-xs bg-gray-800 text-green-400 border border-gray-700 px-1.5 py-0.5 rounded font-mono">
+                <span key={s.id} className="text-xs bg-gray-100 dark:bg-gray-800 text-green-600 dark:text-green-400 border border-gray-300 dark:border-gray-700 px-1.5 py-0.5 rounded font-mono">
                   {s.symbol}
                 </span>
               ))}

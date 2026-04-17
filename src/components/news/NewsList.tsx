@@ -36,7 +36,7 @@ export default function NewsList({ params = {} }: NewsListProps) {
     return (
       <div className="text-center py-20">
         <p className="text-4xl mb-4">📭</p>
-        <p className="text-gray-400">{t('news_list.no_articles')}</p>
+        <p className="text-gray-600 dark:text-gray-400">{t('news_list.no_articles')}</p>
       </div>
     );
   }
@@ -55,7 +55,7 @@ export default function NewsList({ params = {} }: NewsListProps) {
       {pagination && pagination.pages > 1 && (
         <div className="flex items-center justify-center gap-2 mt-10">
           <button onClick={() => handlePage(pagination.page - 1)} disabled={pagination.page === 1}
-            className="flex items-center gap-1 px-3 py-2.5 text-sm bg-gray-800 border border-gray-700 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
+            className="flex items-center gap-1 px-3 py-2.5 text-sm bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
             <ChevronLeft size={16} /> {t('news_list.prev')}
           </button>
 
@@ -66,14 +66,14 @@ export default function NewsList({ params = {} }: NewsListProps) {
                 className={`w-10 h-10 text-sm rounded-lg border transition-colors ${
                   p === pagination.page
                     ? 'bg-green-500 border-green-500 text-white font-semibold'
-                    : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'
+                    : 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}>
                 {p}
               </button>
             ))}
 
           <button onClick={() => handlePage(pagination.page + 1)} disabled={pagination.page === pagination.pages}
-            className="flex items-center gap-1 px-3 py-2.5 text-sm bg-gray-800 border border-gray-700 rounded-lg disabled:opacity-40 hover:bg-gray-700 transition-colors">
+            className="flex items-center gap-1 px-3 py-2.5 text-sm bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
             {t('news_list.next')} <ChevronRight size={16} />
           </button>
         </div>

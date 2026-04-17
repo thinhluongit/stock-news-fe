@@ -23,7 +23,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-900 border-t border-gray-800 mt-16">
+    <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
@@ -31,7 +31,7 @@ export default function Footer() {
               <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
                 <TrendingUp size={18} className="text-white" />
               </div>
-              <span className="font-bold text-lg text-white">
+              <span className="font-bold text-lg text-gray-900 dark:text-white">
                 ThanhDang<span className="text-green-400">Bullish</span>
               </span>
             </div>
@@ -41,8 +41,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4">{t('footer.navigation')}</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
+            <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">{t('footer.navigation')}</h4>
+            <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               {NAV_LINKS.map(([href, label]) => (
                 <li key={href}>
                   <Link href={href} className="hover:text-green-400 transition-colors">{label}</Link>
@@ -52,8 +52,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4">{t('footer.topics')}</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
+            <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">{t('footer.topics')}</h4>
+            <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               {TOPICS.map(([slug, label]) => (
                 <li key={slug}>
                   <Link href={`/news?category=${slug}`} className="hover:text-green-400 transition-colors">{label}</Link>
@@ -63,9 +63,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-gray-200 dark:border-gray-800 mt-8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-500">&copy; {new Date().getFullYear()} ThanhDangBullish. {t('footer.all_rights')}</p>
-          <p className="text-xs text-gray-600">{t('footer.disclaimer')}</p>
+          <p className="text-xs text-gray-500 dark:text-gray-600">{t('footer.disclaimer')}</p>
         </div>
       </div>
     </footer>

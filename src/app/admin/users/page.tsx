@@ -10,11 +10,11 @@ import { Lock, Pencil, Trash2, ToggleLeft, ToggleRight, ChevronLeft, ChevronRigh
 
 function ConfirmDialog({ message, onConfirm, onCancel }: { message: string; onConfirm: () => void; onCancel: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 shadow-2xl">
-        <p className="text-white text-sm mb-5">{message}</p>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 dark:bg-black/60 backdrop-blur-sm">
+      <div className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 shadow-2xl">
+        <p className="text-gray-900 dark:text-white text-sm mb-5">{message}</p>
         <div className="flex gap-3 justify-end">
-          <button onClick={onCancel} className="px-4 py-2 text-sm text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
+          <button onClick={onCancel} className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">
             Cancel
           </button>
           <button onClick={onConfirm} className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-500 rounded-lg transition-colors">
@@ -38,7 +38,6 @@ export default function AdminUsersPage() {
   const [deleteId, setDeleteId]   = useState<string | null>(null);
   const [searchDebounce, setSearchDebounce] = useState('');
 
-  // Debounce search
   useEffect(() => {
     const t = setTimeout(() => setSearchDebounce(search), 400);
     return () => clearTimeout(t);
@@ -49,8 +48,6 @@ export default function AdminUsersPage() {
   }, [dispatch, page, searchDebounce, role]);
 
   useEffect(() => { load(); }, [load]);
-
-  // Reset to page 1 when filters change
   useEffect(() => { setPage(1); }, [searchDebounce, role]);
 
   const handleDelete = async () => {
@@ -78,7 +75,7 @@ export default function AdminUsersPage() {
       )}
 
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-white">{t('admin.users')}</h1>
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin.users')}</h1>
       </div>
 
       {/* Filters */}
@@ -88,12 +85,12 @@ export default function AdminUsersPage() {
           placeholder={t('admin.search_placeholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500"
+          className="flex-1 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500"
         />
         <select
           value={role}
           onChange={(e) => setRole(e.target.value)}
-          className="bg-gray-900 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-green-500"
+          className="bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-sm text-gray-900 dark:text-white focus:outline-none focus:border-green-500"
         >
           <option value="">{t('admin.all_roles')}</option>
           <option value="user">{t('admin.user.role_user')}</option>
@@ -103,7 +100,7 @@ export default function AdminUsersPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+      <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
         {loading ? (
           <div className="flex justify-center py-12">
             <Loader2 className="animate-spin text-green-400" size={24} />
@@ -112,28 +109,28 @@ export default function AdminUsersPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-800">
-                  <th className="text-left px-4 py-3 text-gray-400 font-medium">{t('admin.user.name')}</th>
-                  <th className="text-left px-4 py-3 text-gray-400 font-medium hidden md:table-cell">{t('admin.user.email')}</th>
-                  <th className="text-left px-4 py-3 text-gray-400 font-medium">{t('admin.user.role')}</th>
-                  <th className="text-left px-4 py-3 text-gray-400 font-medium">{t('admin.user.status')}</th>
-                  <th className="text-left px-4 py-3 text-gray-400 font-medium hidden lg:table-cell">{t('admin.user.joined')}</th>
-                  <th className="px-4 py-3 text-gray-400 font-medium text-right">Actions</th>
+                <tr className="border-b border-gray-200 dark:border-gray-800">
+                  <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium">{t('admin.user.name')}</th>
+                  <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium hidden md:table-cell">{t('admin.user.email')}</th>
+                  <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium">{t('admin.user.role')}</th>
+                  <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium">{t('admin.user.status')}</th>
+                  <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium hidden lg:table-cell">{t('admin.user.joined')}</th>
+                  <th className="px-4 py-3 text-gray-600 dark:text-gray-400 font-medium text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-800">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                 {users.map((u) => (
-                  <tr key={u.id} className="hover:bg-gray-800/40 transition-colors">
+                  <tr key={u.id} className="hover:bg-gray-100 dark:hover:bg-gray-800/40 transition-colors">
                     <td className="px-4 py-3">
-                      <span className="text-white font-medium">{u.full_name}</span>
+                      <span className="text-gray-900 dark:text-white font-medium">{u.full_name}</span>
                       <span className="block text-xs text-gray-500 md:hidden">{u.email}</span>
                     </td>
-                    <td className="px-4 py-3 text-gray-400 hidden md:table-cell">{u.email}</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400 hidden md:table-cell">{u.email}</td>
                     <td className="px-4 py-3">
                       <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                         u.role === 'admin'  ? 'bg-purple-500/20 text-purple-400' :
                         u.role === 'editor' ? 'bg-blue-500/20 text-blue-400' :
-                                              'bg-gray-700 text-gray-400'
+                                              'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
                       }`}>{u.role}</span>
                     </td>
                     <td className="px-4 py-3">
@@ -143,19 +140,19 @@ export default function AdminUsersPage() {
                         {u.is_active ? t('admin.user.active') : t('admin.user.inactive')}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-gray-400 text-xs hidden lg:table-cell">
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400 text-xs hidden lg:table-cell">
                       {formatDate(u.created_at)}
                     </td>
                     <td className="px-4 py-3">
                       {u.role === 'admin' ? (
                         <div className="flex justify-end">
-                          <span title={t('admin.user.admin_readonly')}><Lock size={14} className="text-gray-600" /></span>
+                          <span title={t('admin.user.admin_readonly')}><Lock size={14} className="text-gray-400 dark:text-gray-600" /></span>
                         </div>
                       ) : (
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => router.push(`/admin/users/${u.id}`)}
-                            className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+                            className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
                             title={t('admin.actions.edit')}
                           >
                             <Pencil size={14} />
@@ -165,7 +162,7 @@ export default function AdminUsersPage() {
                             className={`p-1.5 rounded-lg transition-colors ${
                               u.is_active
                                 ? 'text-green-400 hover:text-green-300 hover:bg-green-500/10'
-                                : 'text-gray-500 hover:text-gray-300 hover:bg-gray-700'
+                                : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                             }`}
                             title={u.is_active ? t('admin.user.disable') : t('admin.user.enable')}
                           >
@@ -173,7 +170,7 @@ export default function AdminUsersPage() {
                           </button>
                           <button
                             onClick={() => setDeleteId(u.id)}
-                            className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                            className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
                             title={t('admin.actions.delete')}
                           >
                             <Trash2 size={14} />
@@ -204,14 +201,14 @@ export default function AdminUsersPage() {
             <button
               disabled={page <= 1}
               onClick={() => setPage((p) => p - 1)}
-              className="flex items-center gap-1 px-3 py-1.5 text-sm bg-gray-800 border border-gray-700 text-gray-300 rounded-lg hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center gap-1 px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
               <ChevronLeft size={14} /> {t('news_list.prev')}
             </button>
             <button
               disabled={page >= pagination.pages}
               onClick={() => setPage((p) => p + 1)}
-              className="flex items-center gap-1 px-3 py-1.5 text-sm bg-gray-800 border border-gray-700 text-gray-300 rounded-lg hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center gap-1 px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
               {t('news_list.next')} <ChevronRight size={14} />
             </button>

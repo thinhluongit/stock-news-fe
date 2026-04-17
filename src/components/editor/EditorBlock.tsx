@@ -98,10 +98,10 @@ const EditorBlock = forwardRef<EditorBlockRef, Props>(({ data, readOnly = false 
   return (
     <div
       ref={holderRef}
-      className={`min-h-[400px] bg-gray-800 border rounded-lg px-3 py-2 text-white transition-colors [&_.ce-block\_\_content]:max-w-none [&_.codex-editor\_\_redactor]:pb-8 ${
+      className={`min-h-[400px] bg-gray-100 dark:bg-gray-800 border rounded-lg px-3 py-2 text-gray-900 dark:text-white transition-colors [&_.ce-block\_\_content]:max-w-none [&_.codex-editor\_\_redactor]:pb-8 ${
         readOnly
-          ? 'border-gray-700 opacity-60 pointer-events-none'
-          : 'border-gray-700 focus-within:border-green-500'
+          ? 'border-gray-300 dark:border-gray-700 opacity-60 pointer-events-none'
+          : 'border-gray-300 dark:border-gray-700 focus-within:border-green-500'
       }`}
     />
   );

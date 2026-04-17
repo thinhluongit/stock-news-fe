@@ -32,7 +32,7 @@ export default function DashboardPostsPage() {
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-white">My Posts</h1>
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white">My Posts</h1>
         <button
           onClick={() => router.push('/dashboard/posts/new')}
           className="flex items-center gap-2 px-4 py-2 text-sm text-white bg-green-600 hover:bg-green-500 rounded-lg transition-colors"
@@ -46,7 +46,7 @@ export default function DashboardPostsPage() {
         <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-400 text-sm">{error}</div>
       )}
 
-      <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+      <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
         {loading ? (
           <div className="flex justify-center py-12">
             <Loader2 className="animate-spin text-green-400" size={24} />
@@ -55,20 +55,20 @@ export default function DashboardPostsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-800">
-                  <th className="text-left px-4 py-3 text-gray-400 font-medium">Title</th>
-                  <th className="text-left px-4 py-3 text-gray-400 font-medium hidden sm:table-cell">Status</th>
-                  <th className="text-left px-4 py-3 text-gray-400 font-medium hidden lg:table-cell">Date</th>
-                  <th className="px-4 py-3 text-gray-400 font-medium text-right">Actions</th>
+                <tr className="border-b border-gray-200 dark:border-gray-800">
+                  <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium">Title</th>
+                  <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium hidden sm:table-cell">Status</th>
+                  <th className="text-left px-4 py-3 text-gray-600 dark:text-gray-400 font-medium hidden lg:table-cell">Date</th>
+                  <th className="px-4 py-3 text-gray-600 dark:text-gray-400 font-medium text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-800">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                 {posts.map((post) => {
                   const ds = post.doc_status as 0 | 1 | 2;
                   return (
-                    <tr key={post.id} className="hover:bg-gray-800/40 transition-colors">
+                    <tr key={post.id} className="hover:bg-gray-100 dark:hover:bg-gray-800/40 transition-colors">
                       <td className="px-4 py-3">
-                        <p className="text-white font-medium line-clamp-1 max-w-sm">{post.title}</p>
+                        <p className="text-gray-900 dark:text-white font-medium line-clamp-1 max-w-sm">{post.title}</p>
                         <span className={`mt-1 inline-block text-xs px-1.5 py-0.5 rounded-full font-medium sm:hidden ${DOC_STATUS_COLORS[ds]}`}>
                           {DOC_STATUS_LABEL[ds]}
                         </span>
@@ -78,7 +78,7 @@ export default function DashboardPostsPage() {
                           {DOC_STATUS_LABEL[ds]}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-gray-400 text-xs hidden lg:table-cell">
+                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400 text-xs hidden lg:table-cell">
                         {formatDate(post.created_at)}
                       </td>
                       <td className="px-4 py-3">
@@ -94,7 +94,7 @@ export default function DashboardPostsPage() {
                           ) : (
                             <button
                               onClick={() => router.push(`/dashboard/posts/${post.id}/edit`)}
-                              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+                              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
                             >
                               <Pencil size={12} />
                               Edit

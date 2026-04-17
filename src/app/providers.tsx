@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from 'next-themes';
 import { store } from '../store';
 import { useAppDispatch } from '../store/hooks';
 import { fetchCurrentUser } from '../store/slices/authSlice';
@@ -21,20 +22,22 @@ function AuthBootstrap() {
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <LocaleProvider>
-      <Provider store={store}>
-        <AuthBootstrap />
-        {children}
-        <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 4000,
-          style: { background: '#1f2937', color: '#f9fafb', borderRadius: '8px' },
-          success: { iconTheme: { primary: '#22c55e', secondary: '#fff' } },
-          error:   { iconTheme: { primary: '#ef4444', secondary: '#fff' } },
-        }}
-        />
-      </Provider>
-    </LocaleProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+      <LocaleProvider>
+        <Provider store={store}>
+          <AuthBootstrap />
+          {children}
+          <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: { background: '#1f2937', color: '#f9fafb', borderRadius: '8px' },
+            success: { iconTheme: { primary: '#22c55e', secondary: '#fff' } },
+            error:   { iconTheme: { primary: '#ef4444', secondary: '#fff' } },
+          }}
+          />
+        </Provider>
+      </LocaleProvider>
+    </ThemeProvider>
   );
 }

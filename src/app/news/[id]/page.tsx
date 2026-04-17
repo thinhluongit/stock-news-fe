@@ -10,6 +10,7 @@ import Sidebar from '../../../components/layout/Sidebar';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { fetchNewsArticle, clearCurrentArticle } from '../../../store/slices/newsSlice';
 import { formatDate } from '../../../lib/utils';
+import { renderEditorContent } from '../../../lib/editorjs-renderer';
 import { Clock, Eye, User, ArrowLeft, Loader2 } from 'lucide-react';
 
 export default function ArticlePage() {
@@ -23,12 +24,12 @@ export default function ArticlePage() {
   }, [slug, dispatch]);
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
-            <Link href="/news" className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-green-400 mb-6 transition-colors">
+            <Link href="/news" className="inline-flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-green-400 mb-6 transition-colors">
               <ArrowLeft size={16} /> Back to News
             </Link>
 
@@ -59,30 +60,30 @@ export default function ArticlePage() {
                   </span>
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl font-bold text-white mb-4 leading-tight">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
                   {article.title}
                 </h1>
 
                 {article.summary && (
-                  <p className="text-lg text-gray-300 mb-6 leading-relaxed border-l-4 border-green-500 pl-4">
+                  <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed border-l-4 border-green-500 pl-4">
                     {article.summary}
                   </p>
                 )}
 
                 {article.author && (
-                  <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-800">
+                  <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-200 dark:border-gray-800">
                     <div className="w-9 h-9 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center">
                       <User size={16} className="text-green-400" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white">{article.author.full_name}</p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">{article.author.full_name}</p>
                       <p className="text-xs text-gray-500">Author</p>
                     </div>
                   </div>
                 )}
 
                 {article.thumbnail_url && (
-                  <div className="relative w-full h-72 sm:h-96 rounded-xl overflow-hidden mb-8 bg-gray-800">
+                  <div className="relative w-full h-72 sm:h-96 rounded-xl overflow-hidden mb-8 bg-gray-200 dark:bg-gray-800">
                     <Image src={article.thumbnail_url} alt={article.title} fill className="object-cover" />
                   </div>
                 )}
@@ -92,7 +93,7 @@ export default function ArticlePage() {
                     <span className="text-xs text-gray-500">Related stocks:</span>
                     {article.stocks!.map((s) => (
                       <Link key={s.id} href={`/stocks?symbol=${s.symbol}`}
-                        className="text-xs bg-gray-800 border border-gray-700 text-green-400 hover:border-green-500 px-2 py-1 rounded font-mono transition-colors">
+                        className="text-xs bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-green-600 dark:text-green-400 hover:border-green-500 px-2 py-1 rounded font-mono transition-colors">
                         {s.symbol}
                       </Link>
                     ))}
@@ -100,7 +101,7 @@ export default function ArticlePage() {
                 )}
 
                 <div className="article-content"
-                  dangerouslySetInnerHTML={{ __html: article.content ?? '' }} />
+                  dangerouslySetInnerHTML={{ __html: renderEditorContent(article.content) }} />
               </article>
             )}
           </div>

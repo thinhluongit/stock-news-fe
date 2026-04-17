@@ -17,12 +17,12 @@ export default function HomePage() {
   const { t } = useLocale();
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <Header />
 
       {/* Ticker bar */}
-      <div className="bg-gray-900 border-b border-gray-800 py-2 overflow-hidden">
-        <div className="flex items-center gap-6 animate-marquee whitespace-nowrap px-4 text-xs text-gray-400">
+      <div className="bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 py-2 overflow-hidden">
+        <div className="flex items-center gap-6 animate-marquee whitespace-nowrap px-4 text-xs text-gray-600 dark:text-gray-400">
           {TICKERS.map((tick) => (
             <span key={tick} className={`font-mono ${tick.includes('-') ? 'text-red-400' : 'text-green-400'}`}>{tick}</span>
           ))}
@@ -36,7 +36,7 @@ export default function HomePage() {
           <div className="lg:col-span-3">
             <div className="flex items-center gap-2 mb-6">
               <TrendingUp size={20} className="text-green-400" />
-              <h2 className="text-xl font-bold text-white">{t('home.latest_news')}</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('home.latest_news')}</h2>
             </div>
             <NewsList />
           </div>

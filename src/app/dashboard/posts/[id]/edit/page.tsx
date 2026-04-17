@@ -117,7 +117,7 @@ export default function EditPostPage() {
   }
 
   if (!loading && !currentPost) {
-    return <p className="text-gray-400 text-sm">Post not found.</p>;
+    return <p className="text-gray-600 dark:text-gray-400 text-sm">Post not found.</p>;
   }
 
   const ds = (currentPost?.doc_status ?? 0) as 0 | 1 | 2;
@@ -128,11 +128,11 @@ export default function EditPostPage() {
       <div className="flex items-center gap-3">
         <button
           onClick={() => router.push('/dashboard/posts')}
-          className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+          className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
         >
           <ChevronLeft size={18} />
         </button>
-        <h1 className="text-xl font-bold text-white line-clamp-1 flex-1">{currentPost?.title ?? 'Edit Post'}</h1>
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-1 flex-1">{currentPost?.title ?? 'Edit Post'}</h1>
         <span className={`text-xs px-2 py-1 rounded-full font-medium ${DOC_STATUS_COLORS[ds]}`}>
           {DOC_STATUS_LABEL[ds]}
         </span>
@@ -153,8 +153,8 @@ export default function EditPostPage() {
       )}
 
       {/* Status action bar */}
-      <div className="flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-xl px-4 py-3">
-        <span className="text-sm text-gray-400 flex-1">Status actions</span>
+      <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl px-4 py-3">
+        <span className="text-sm text-gray-600 dark:text-gray-400 flex-1">Status actions</span>
         {ds === 0 && (
           <button
             onClick={() => handleStatusChange(1)}
@@ -170,7 +170,7 @@ export default function EditPostPage() {
             <button
               onClick={() => handleStatusChange(0)}
               disabled={saving}
-              className="px-3 py-2 text-sm text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50"
+              className="px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50"
             >
               Revert to Draft
             </button>
@@ -195,53 +195,53 @@ export default function EditPostPage() {
         )}
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
+      <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-5 space-y-4">
         {/* Title */}
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">Title *</label>
+          <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">Title *</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             disabled={isPublished}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
         {/* Summary */}
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">Summary</label>
+          <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">Summary</label>
           <textarea
             rows={3}
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
             disabled={isPublished}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 resize-y disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500 resize-y disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
         {/* Thumbnail */}
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">Thumbnail URL</label>
+          <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">Thumbnail URL</label>
           <input
             type="text"
             value={thumbnail}
             onChange={(e) => setThumbnail(e.target.value)}
             disabled={isPublished}
             placeholder="https://…"
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
         {/* Category + Featured */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">Category</label>
+            <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">Category</label>
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
               disabled={isPublished}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:outline-none focus:border-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <option value="">— None —</option>
               {categories.map((c) => (
@@ -250,8 +250,8 @@ export default function EditPostPage() {
             </select>
           </div>
 
-          <div className={`flex items-center justify-between bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 ${isPublished ? 'opacity-50' : ''}`}>
-            <span className="text-sm text-gray-300">Featured</span>
+          <div className={`flex items-center justify-between bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2.5 ${isPublished ? 'opacity-50' : ''}`}>
+            <span className="text-sm text-gray-700 dark:text-gray-300">Featured</span>
             <button
               type="button"
               onClick={() => !isPublished && setIsFeatured((v) => !v)}
@@ -270,7 +270,7 @@ export default function EditPostPage() {
         {/* Stock tags */}
         {stocks.length > 0 && (
           <div>
-            <label className="block text-xs text-gray-400 mb-2">Related Stocks</label>
+            <label className="block text-xs text-gray-600 dark:text-gray-400 mb-2">Related Stocks</label>
             <div className="flex flex-wrap gap-2">
               {stocks.map((s) => (
                 <button
@@ -281,7 +281,7 @@ export default function EditPostPage() {
                   className={`px-2.5 py-1 text-xs rounded-full border transition-colors disabled:cursor-not-allowed ${
                     stockIds.includes(s.id)
                       ? 'bg-green-500/20 border-green-500/50 text-green-400'
-                      : 'bg-gray-800 border-gray-700 text-gray-400 hover:border-gray-500'
+                      : 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500'
                   }`}
                 >
                   {s.symbol}
@@ -294,7 +294,7 @@ export default function EditPostPage() {
         {/* Content editor — only rendered once editorData is resolved */}
         {editorReady && (
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">Content</label>
+            <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1.5">Content</label>
             <EditorBlock ref={editorRef} data={editorData} readOnly={isPublished} />
           </div>
         )}
@@ -303,7 +303,7 @@ export default function EditPostPage() {
       <div className="flex justify-end gap-3">
         <button
           onClick={() => router.push('/dashboard/posts')}
-          className="px-4 py-2.5 text-sm text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
+          className="px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
         >
           Cancel
         </button>
