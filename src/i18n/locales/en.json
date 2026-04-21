@@ -121,7 +121,14 @@
       "no": "No",
       "summary": "Summary",
       "content": "Content",
-      "thumbnail": "Thumbnail URL",
+      "thumbnail": "Thumbnail",
+      "thumbnail_upload": "Upload file",
+      "or_url": "or paste URL",
+      "media_gallery": "Media Gallery",
+      "add_media": "Add media files",
+      "new_post": "New Post",
+      "create_post": "Create Post",
+      "creating": "Creating...",
       "is_featured": "Mark as Featured"
     },
     "category": {

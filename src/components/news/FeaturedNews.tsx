@@ -8,15 +8,25 @@ import { fetchFeaturedNews } from '../../store/slices/newsSlice';
 import { Clock, Eye, ArrowRight } from 'lucide-react';
 import { formatDateRelative } from '../../lib/utils';
 import { useLocale } from '../../i18n/LocaleContext';
+import type { Article } from '../../types';
 
-export default function FeaturedNews() {
+interface Props {
+  initialData?: Article[];
+}
+
+export default function FeaturedNews({ initialData }: Props) {
   const dispatch = useAppDispatch();
-  const { featuredNews } = useAppSelector((s) => s.news);
+  const reduxArticles = useAppSelector((s) => s.news.featuredNews);
   const { t } = useLocale();
 
   useEffect(() => {
-    dispatch(fetchFeaturedNews());
-  }, [dispatch]);
+    // Skip fetch when the server already provided data on initial load.
+    // Redux will be populated on subsequent client-side navigations if needed.
+    if (!initialData?.length) dispatch(fetchFeaturedNews());
+  }, [dispatch, initialData]);
+
+  // Prefer Redux state (kept fresh on re-navigation) then fall back to server data.
+  const featuredNews = reduxArticles.length ? reduxArticles : (initialData ?? []);
 
   if (!featuredNews.length) return null;
 
@@ -36,7 +46,8 @@ export default function FeaturedNews() {
         <Link href={`/news/${main.slug}`} className="lg:col-span-3 group">
           <article className="relative rounded-xl overflow-hidden h-80 bg-gray-200 dark:bg-gray-800">
             {main.thumbnail_url ? (
-              <Image src={main.thumbnail_url} alt={main.title} fill
+              <Image src={main.thumbnail_url} alt={main.title} fill priority
+                sizes="(max-width: 1024px) 100vw, 60vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-300" />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-green-900/20 to-gray-100 dark:from-green-900/40 dark:to-gray-900 flex items-center justify-center text-6xl">📈</div>
@@ -68,7 +79,8 @@ export default function FeaturedNews() {
               className="group flex gap-3 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 overflow-hidden transition-colors">
               <div className="relative w-24 h-24 flex-shrink-0 bg-gray-200 dark:bg-gray-800">
                 {article.thumbnail_url ? (
-                  <Image src={article.thumbnail_url} alt={article.title} fill className="object-cover" />
+                  <Image src={article.thumbnail_url} alt={article.title} fill
+                    sizes="96px" className="object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-2xl">📊</div>
                 )}

@@ -72,11 +72,15 @@ export const adminApi = {
   toggleStatus: (id: string)                        => api.patch(`/admin/users/${id}/status`),
 };
 
+const fileUploadConfig = { timeout: 120_000 };
+
 export const postsApi = {
   getAll:       (params?: Record<string, unknown>) => api.get('/posts', { params }),
   getById:      (id: string)                       => api.get(`/posts/${id}`),
-  create:       (data: unknown)                    => api.post('/posts', data),
-  update:       (id: string, data: unknown)        => api.put(`/posts/${id}`, data),
+  create:       (data: FormData | Record<string, unknown>) =>
+    api.post('/posts', data, data instanceof FormData ? fileUploadConfig : undefined),
+  update:       (id: string, data: FormData | Record<string, unknown>) =>
+    api.put(`/posts/${id}`, data, data instanceof FormData ? fileUploadConfig : undefined),
   updateStatus: (id: string, doc_status: 0 | 1 | 2) => api.patch(`/posts/${id}/status`, { doc_status }),
   remove:       (id: string)                       => api.delete(`/posts/${id}`),
 };

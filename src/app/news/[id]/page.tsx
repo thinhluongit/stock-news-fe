@@ -84,7 +84,8 @@ export default function ArticlePage() {
 
                 {article.thumbnail_url && (
                   <div className="relative w-full h-72 sm:h-96 rounded-xl overflow-hidden mb-8 bg-gray-200 dark:bg-gray-800">
-                    <Image src={article.thumbnail_url} alt={article.title} fill className="object-cover" />
+                    <Image src={article.thumbnail_url} alt={article.title} fill
+                      sizes="(max-width: 1024px) 100vw, 75vw" className="object-cover" />
                   </div>
                 )}
 

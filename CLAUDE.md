@@ -85,3 +85,7 @@ Dark-themed Tailwind UI. Custom brand tokens in `tailwind.config.js`:
 - Background layers: `gray-950` (page) / `gray-900` (cards)
 
 Path alias `@/*` maps to `src/*` (configured in `tsconfig.json`).
+
+## Rules
+
+@docs/rules/images.md

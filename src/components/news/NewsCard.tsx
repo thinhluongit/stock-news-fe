@@ -18,6 +18,7 @@ export default function NewsCard({ article, size = 'md' }: NewsCardProps) {
         <div className={`relative overflow-hidden ${isLg ? 'h-56' : 'h-40'} bg-gray-200 dark:bg-gray-800`}>
           {article.thumbnail_url ? (
             <Image src={article.thumbnail_url} alt={article.title} fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover group-hover:scale-105 transition-transform duration-300" />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-900">

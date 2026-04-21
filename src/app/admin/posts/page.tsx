@@ -7,7 +7,7 @@ import { fetchNews } from '../../../store/slices/newsSlice';
 import { useLocale } from '../../../i18n/LocaleContext';
 import { newsApi, postsApi } from '../../../services/api';
 import { DOC_STATUS_LABEL, DOC_STATUS_COLORS } from '../../../types';
-import { Pencil, Trash2, Star, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import { Pencil, Trash2, Star, ChevronLeft, ChevronRight, Loader2, Plus } from 'lucide-react';
 
 function ConfirmDialog({ message, onConfirm, onCancel }: { message: string; onConfirm: () => void; onCancel: () => void }) {
   return (
@@ -92,7 +92,16 @@ export default function AdminPostsPage() {
         />
       )}
 
-      <h1 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin.posts')}</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white">{t('admin.posts')}</h1>
+        <button
+          onClick={() => router.push('/admin/posts/create')}
+          className="flex items-center gap-2 px-3 py-2 text-sm text-white bg-green-600 hover:bg-green-500 rounded-lg transition-colors"
+        >
+          <Plus size={14} />
+          {t('admin.post.new_post')}
+        </button>
+      </div>
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">

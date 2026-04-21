@@ -30,6 +30,13 @@ export interface Stock {
   last_updated?: string;
 }
 
+export interface MediaItem {
+  id: string;
+  url: string;
+  media_type: 'image' | 'video';
+  display_order: number;
+}
+
 export interface Article {
   id: string;
   title: string;
@@ -37,6 +44,7 @@ export interface Article {
   summary?: string;
   content?: string;
   thumbnail_url?: string;
+  media?: MediaItem[];
   author?: Pick<User, 'id' | 'full_name' | 'avatar_url'>;
   category?: Pick<Category, 'id' | 'name' | 'slug' | 'color'>;
   stocks?: Pick<Stock, 'id' | 'symbol' | 'company_name'>[];

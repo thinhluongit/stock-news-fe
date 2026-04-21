@@ -3,6 +3,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import type EditorJSClass from '@editorjs/editorjs';
 import type { OutputData } from '@editorjs/editorjs';
+import VideoTool from './VideoTool';
 
 export interface EditorBlockRef {
   save(): Promise<OutputData>;
@@ -80,6 +81,14 @@ const EditorBlock = forwardRef<EditorBlockRef, Props>(({ data, readOnly = false 
           },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           embed: { class: Embed as any },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          video: {
+            class: VideoTool as any,
+            config: {
+              uploadUrl: `${process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000/api'}/upload`,
+              getToken: () => typeof window !== 'undefined' ? localStorage.getItem('token') : null,
+            },
+          },
         },
         placeholder: 'Start writing your article…',
       });

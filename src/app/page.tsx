@@ -1,20 +1,32 @@
-'use client';
-
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import Sidebar from '../components/layout/Sidebar';
 import FeaturedNews from '../components/news/FeaturedNews';
 import NewsList from '../components/news/NewsList';
-import { TrendingUp } from 'lucide-react';
-import { useLocale } from '../i18n/LocaleContext';
+import LatestNewsHeading from '../components/home/LatestNewsHeading';
+import type { Article } from '../types';
 
 const TICKERS = [
   'AAPL +1.2%', 'MSFT +0.8%', 'NVDA +3.1%', 'TSLA -1.5%',
   'GOOGL +0.5%', 'META +2.3%', 'AMZN +0.9%', 'BRK.B +0.4%',
 ];
 
-export default function HomePage() {
-  const { t } = useLocale();
+async function getFeaturedNews(): Promise<Article[]> {
+  try {
+    const base = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000/api';
+    const res = await fetch(`${base}/news?featured=true&limit=5`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return (json.data as Article[]) ?? [];
+  } catch {
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const featuredNews = await getFeaturedNews();
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
@@ -30,14 +42,11 @@ export default function HomePage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <FeaturedNews />
+        <FeaturedNews initialData={featuredNews} />
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
-            <div className="flex items-center gap-2 mb-6">
-              <TrendingUp size={20} className="text-green-400" />
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('home.latest_news')}</h2>
-            </div>
+            <LatestNewsHeading />
             <NewsList />
           </div>
           <div className="lg:col-span-1">

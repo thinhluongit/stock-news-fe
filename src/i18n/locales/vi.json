@@ -121,7 +121,14 @@
       "no": "Không",
       "summary": "Tóm tắt",
       "content": "Nội dung",
-      "thumbnail": "URL ảnh đại diện",
+      "thumbnail": "Ảnh đại diện",
+      "thumbnail_upload": "Tải tệp lên",
+      "or_url": "hoặc dán URL",
+      "media_gallery": "Thư viện media",
+      "add_media": "Thêm tệp media",
+      "new_post": "Bài viết mới",
+      "create_post": "Tạo bài viết",
+      "creating": "Đang tạo...",
       "is_featured": "Đánh dấu nổi bật"
     },
     "category": {
