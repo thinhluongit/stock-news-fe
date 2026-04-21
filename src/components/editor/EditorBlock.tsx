@@ -4,6 +4,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import type EditorJSClass from '@editorjs/editorjs';
 import type { OutputData } from '@editorjs/editorjs';
 import VideoTool from './VideoTool';
+import TextColorTool from './TextColorTool';
 
 export interface EditorBlockRef {
   save(): Promise<OutputData>;
@@ -38,7 +39,7 @@ const EditorBlock = forwardRef<EditorBlockRef, Props>(({ data, readOnly = false 
       import('@editorjs/embed'),
       import('@editorjs/underline'),
       import('@editorjs/delimiter'),
-      import('editorjs-text-color-plugin'),
+      import('@editorjs/marker'),
     ]).then(([
       { default: EditorJS },
       { default: Header },
@@ -48,7 +49,7 @@ const EditorBlock = forwardRef<EditorBlockRef, Props>(({ data, readOnly = false 
       { default: Embed },
       { default: Underline },
       { default: Delimiter },
-      { default: ColorPlugin },
+      { default: Marker },
     ]) => {
       // Re-check inside the async callback: in React Strict Mode both the first
       // and second mount start this Promise.all while editorRef.current is still
@@ -61,7 +62,7 @@ const EditorBlock = forwardRef<EditorBlockRef, Props>(({ data, readOnly = false 
         holder: holderRef.current,
         data,
         readOnly,
-        inlineToolbar: ['bold', 'italic', 'underline', 'textColor', 'link'],
+        inlineToolbar: ['bold', 'italic', 'underline', 'textColor', 'marker', 'link'],
         tools: {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           header: { class: Header as any, config: { levels: [2, 3, 4], defaultLevel: 2 } },
@@ -97,20 +98,9 @@ const EditorBlock = forwardRef<EditorBlockRef, Props>(({ data, readOnly = false 
           underline: { class: Underline as any },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           delimiter: { class: Delimiter as any },
-          textColor: {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            class: ColorPlugin as any,
-            config: {
-              colorCollections: [
-                '#FFFFFF', '#9CA3AF', '#F87171', '#FB923C',
-                '#FACC15', '#22c55e', '#34D399', '#60A5FA',
-                '#A78BFA', '#F472B6', '#000000',
-              ],
-              defaultColor: '#FFFFFF',
-              type: 'text and background',
-              customPicker: true,
-            },
-          },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          marker: { class: Marker as any },
+          textColor: { class: TextColorTool as any },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           video: {
             class: VideoTool as any,
@@ -130,6 +120,7 @@ const EditorBlock = forwardRef<EditorBlockRef, Props>(({ data, readOnly = false 
       // an instance (React Strict Mode double-invoke pattern).
       const instance = editorRef.current;
       editorRef.current = null;
+      document.querySelectorAll('[data-text-color-palette]').forEach(el => el.remove());
       if (instance) {
         instance.isReady
           .then(() => instance.destroy())
