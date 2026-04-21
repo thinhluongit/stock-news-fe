@@ -72,6 +72,12 @@ function renderBlock(block: EditorBlock): string {
     case 'delimiter':
       return '<hr />';
 
+    case 'video': {
+      const url = (data.url as string) ?? '';
+      if (!url) return '';
+      return `<figure class="video my-6"><video controls src="${url}" style="max-width:100%;border-radius:8px;"></video></figure>`;
+    }
+
     default:
       return '';
   }
