@@ -33,6 +33,10 @@
     "subtitle": "Theo dõi cổ phiếu yêu thích của bạn",
     "search_placeholder": "Tìm mã hoặc tên công ty...",
     "scroll_hint": "Cuộn ngang để xem thêm →",
+    "live_badge": "Trực tiếp",
+    "market_unavailable": "Dữ liệu thị trường tạm thời không khả dụng",
+    "last_updated": "Cập nhật",
+    "no_change": "Không đổi",
     "table": {
       "symbol": "Mã",
       "company": "Công ty",
@@ -54,7 +58,8 @@
       "submit": "Đăng nhập",
       "no_account": "Chưa có tài khoản?",
       "signup_link": "Đăng ký",
-      "toast_success": "Chào mừng trở lại!"
+      "toast_success": "Chào mừng trở lại!",
+      "error_invalid_credentials": "Email hoặc mật khẩu không đúng"
     },
     "register": {
       "title": "Tạo tài khoản",
@@ -68,6 +73,7 @@
       "submit": "Tạo tài khoản",
       "has_account": "Đã có tài khoản?",
       "login_link": "Đăng nhập",
+      "error_full_name_required": "Họ và tên không được để trống",
       "error_password_mismatch": "Mật khẩu không khớp",
       "error_password_short": "Mật khẩu phải có ít nhất 6 ký tự",
       "toast_success": "Tạo tài khoản thành công! Chào mừng đến ThanhDangBullish 🚀"

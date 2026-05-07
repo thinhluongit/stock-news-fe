@@ -32,8 +32,9 @@ export const loginUser = createAsyncThunk<
     localStorage.setItem('token', token);
     return { token, user };
   } catch (err: unknown) {
-    const msg = (err as { response?: { data?: { error?: string } } }).response?.data?.error;
-    return rejectWithValue(msg ?? 'Login failed');
+    const e = err as { response?: { status?: number; data?: { error?: string } } };
+    if (e.response?.status === 401) return rejectWithValue('invalid_credentials');
+    return rejectWithValue(e.response?.data?.error ?? 'Login failed');
   }
 });
 

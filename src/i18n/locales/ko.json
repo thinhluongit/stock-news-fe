@@ -1,0 +1,191 @@
+{
+  "nav": {
+    "home": "홈",
+    "news": "뉴스",
+    "stocks": "주식",
+    "markets": "시장",
+    "analysis": "분석",
+    "login": "로그인",
+    "signup": "회원가입",
+    "logout": "로그아웃",
+    "search_placeholder": "뉴스 검색..."
+  },
+  "home": {
+    "latest_news": "최신 뉴스"
+  },
+  "featured": {
+    "title": "주요 기사",
+    "view_all": "전체 보기"
+  },
+  "news_list": {
+    "prev": "이전",
+    "next": "다음",
+    "no_articles": "기사를 찾을 수 없습니다.",
+    "loading": "로딩 중..."
+  },
+  "sidebar": {
+    "market_overview": "시장 개요",
+    "view_all_stocks": "전체 주식 보기 →",
+    "categories": "카테고리"
+  },
+  "stocks": {
+    "title": "주식 시장",
+    "subtitle": "좋아하는 주식을 추적하세요",
+    "search_placeholder": "종목 코드 또는 회사 검색...",
+    "scroll_hint": "더 보려면 가로로 스크롤하세요 →",
+    "table": {
+      "symbol": "종목",
+      "company": "회사",
+      "exchange": "거래소",
+      "sector": "섹터",
+      "price": "가격",
+      "change": "변동",
+      "news": "뉴스",
+      "view_news": "뉴스 보기",
+      "no_stocks": "주식을 찾을 수 없습니다."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "다시 오신 것을 환영합니다",
+      "subtitle": "계정에 로그인하세요",
+      "email": "이메일",
+      "password": "비밀번호",
+      "submit": "로그인",
+      "no_account": "계정이 없으신가요?",
+      "signup_link": "회원가입",
+      "toast_success": "다시 오신 것을 환영합니다!",
+      "error_invalid_credentials": "이메일 또는 비밀번호가 올바르지 않습니다"
+    },
+    "register": {
+      "title": "계정 만들기",
+      "subtitle": "강세 커뮤니티에 참여하세요",
+      "full_name": "이름",
+      "email": "이메일",
+      "password": "비밀번호",
+      "password_placeholder": "최소 6자",
+      "confirm_password": "비밀번호 확인",
+      "confirm_placeholder": "비밀번호를 다시 입력하세요",
+      "submit": "계정 만들기",
+      "has_account": "이미 계정이 있으신가요?",
+      "login_link": "로그인",
+      "error_full_name_required": "이름을 입력해주세요",
+      "error_password_mismatch": "비밀번호가 일치하지 않습니다",
+      "error_password_short": "비밀번호는 최소 6자 이상이어야 합니다",
+      "toast_success": "계정이 생성되었습니다! ThanhDangBullish에 오신 것을 환영합니다 🚀"
+    }
+  },
+  "admin": {
+    "panel": "관리자 패널",
+    "dashboard": "대시보드",
+    "users": "사용자",
+    "posts": "게시물",
+    "categories": "카테고리",
+    "stocks": "주식",
+    "back_to_site": "← 사이트로 돌아가기",
+    "loading": "로딩 중...",
+    "stats": {
+      "users": "전체 사용자",
+      "articles": "전체 기사",
+      "categories": "카테고리",
+      "stocks": "주식",
+      "total_views": "총 조회수"
+    },
+    "recent_users": "최근 사용자",
+    "recent_posts": "최근 게시물",
+    "user": {
+      "name": "이름",
+      "email": "이메일",
+      "role": "역할",
+      "status": "상태",
+      "joined": "가입일",
+      "active": "활성",
+      "inactive": "비활성",
+      "enable": "활성화",
+      "disable": "비활성화",
+      "admin_readonly": "관리자 계정은 수정할 수 없습니다",
+      "role_user": "사용자",
+      "role_editor": "편집자",
+      "role_admin": "관리자"
+    },
+    "post": {
+      "title": "제목",
+      "author": "작성자",
+      "category": "카테고리",
+      "status": "상태",
+      "featured": "추천",
+      "views": "조회수",
+      "date": "날짜",
+      "status_draft": "초안",
+      "status_published": "게시됨",
+      "status_archived": "보관됨",
+      "yes": "예",
+      "no": "아니오",
+      "summary": "요약",
+      "content": "내용",
+      "thumbnail": "썸네일",
+      "thumbnail_upload": "파일 업로드",
+      "or_url": "또는 URL 붙여넣기",
+      "media_gallery": "미디어 갤러리",
+      "add_media": "미디어 파일 추가",
+      "new_post": "새 게시물",
+      "create_post": "게시물 만들기",
+      "creating": "만드는 중...",
+      "is_featured": "추천으로 표시"
+    },
+    "category": {
+      "name": "이름",
+      "slug": "슬러그",
+      "color": "색상",
+      "description": "설명",
+      "article_count": "기사 수",
+      "add_new": "새 카테고리 추가"
+    },
+    "stock": {
+      "symbol": "종목",
+      "company": "회사",
+      "exchange": "거래소",
+      "sector": "섹터",
+      "price": "가격",
+      "change": "변동%",
+      "add_new": "새 주식 추가",
+      "update_price": "가격 업데이트"
+    },
+    "actions": {
+      "edit": "편집",
+      "delete": "삭제",
+      "save": "변경사항 저장",
+      "cancel": "취소",
+      "add": "추가",
+      "update": "업데이트",
+      "confirm_delete": "정말 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.",
+      "view_all": "전체 보기 →"
+    },
+    "search_placeholder": "검색...",
+    "filter_role": "역할로 필터링",
+    "filter_status": "상태로 필터링",
+    "all_roles": "모든 역할",
+    "all_statuses": "모든 상태",
+    "no_users": "사용자를 찾을 수 없습니다.",
+    "no_posts": "게시물을 찾을 수 없습니다.",
+    "no_categories": "카테고리를 찾을 수 없습니다.",
+    "no_stocks": "주식을 찾을 수 없습니다.",
+    "save_success": "저장되었습니다.",
+    "delete_success": "삭제되었습니다.",
+    "error_load": "데이터를 불러오지 못했습니다."
+  },
+  "footer": {
+    "description": "주식 시장 뉴스, 금융 분석 및 투자 인사이트를 위한 신뢰할 수 있는 소스. 정보를 얻으세요. 강세를 유지하세요.",
+    "navigation": "탐색",
+    "topics": "주제",
+    "disclaimer": "면책 조항: 콘텐츠는 정보 제공 목적으로만 제공됩니다. 금융 조언이 아닙니다.",
+    "all_rights": "모든 권리 보유.",
+    "topics_list": {
+      "market_news": "시장 뉴스",
+      "analysis": "분석",
+      "forex": "외환",
+      "crypto": "암호화폐",
+      "ipo": "IPO"
+    }
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "news": "Actualités",
+    "stocks": "Actions",
+    "markets": "Marchés",
+    "analysis": "Analyse",
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "logout": "Déconnexion",
+    "search_placeholder": "Rechercher des actualités..."
+  },
+  "home": {
+    "latest_news": "Dernières nouvelles"
+  },
+  "featured": {
+    "title": "Articles en vedette",
+    "view_all": "Voir tout"
+  },
+  "news_list": {
+    "prev": "Précédent",
+    "next": "Suivant",
+    "no_articles": "Aucun article trouvé.",
+    "loading": "Chargement..."
+  },
+  "sidebar": {
+    "market_overview": "Aperçu du marché",
+    "view_all_stocks": "Voir toutes les actions →",
+    "categories": "Catégories"
+  },
+  "stocks": {
+    "title": "Bourse",
+    "subtitle": "Suivez vos actions préférées",
+    "search_placeholder": "Rechercher un symbole ou une société...",
+    "scroll_hint": "Faites défiler horizontalement pour voir plus →",
+    "table": {
+      "symbol": "Symbole",
+      "company": "Société",
+      "exchange": "Bourse",
+      "sector": "Secteur",
+      "price": "Prix",
+      "change": "Variation",
+      "news": "Actualités",
+      "view_news": "Voir les actualités",
+      "no_stocks": "Aucune action trouvée."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Bon retour",
+      "subtitle": "Connectez-vous à votre compte",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "no_account": "Pas encore de compte ?",
+      "signup_link": "S'inscrire",
+      "toast_success": "Bon retour !",
+      "error_invalid_credentials": "E-mail ou mot de passe incorrect"
+    },
+    "register": {
+      "title": "Créer votre compte",
+      "subtitle": "Rejoignez la communauté haussière",
+      "full_name": "Nom complet",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "password_placeholder": "Min. 6 caractères",
+      "confirm_password": "Confirmer le mot de passe",
+      "confirm_placeholder": "Répétez votre mot de passe",
+      "submit": "Créer un compte",
+      "has_account": "Vous avez déjà un compte ?",
+      "login_link": "Se connecter",
+      "error_full_name_required": "Le nom complet est requis",
+      "error_password_mismatch": "Les mots de passe ne correspondent pas",
+      "error_password_short": "Le mot de passe doit comporter au moins 6 caractères",
+      "toast_success": "Compte créé ! Bienvenue sur ThanhDangBullish 🚀"
+    }
+  },
+  "admin": {
+    "panel": "Panneau d'administration",
+    "dashboard": "Tableau de bord",
+    "users": "Utilisateurs",
+    "posts": "Articles",
+    "categories": "Catégories",
+    "stocks": "Actions",
+    "back_to_site": "← Retour au site",
+    "loading": "Chargement...",
+    "stats": {
+      "users": "Total utilisateurs",
+      "articles": "Total articles",
+      "categories": "Catégories",
+      "stocks": "Actions",
+      "total_views": "Total vues"
+    },
+    "recent_users": "Utilisateurs récents",
+    "recent_posts": "Articles récents",
+    "user": {
+      "name": "Nom",
+      "email": "E-mail",
+      "role": "Rôle",
+      "status": "Statut",
+      "joined": "Inscrit",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "enable": "Activer",
+      "disable": "Désactiver",
+      "admin_readonly": "Les comptes administrateur ne peuvent pas être modifiés",
+      "role_user": "Utilisateur",
+      "role_editor": "Éditeur",
+      "role_admin": "Administrateur"
+    },
+    "post": {
+      "title": "Titre",
+      "author": "Auteur",
+      "category": "Catégorie",
+      "status": "Statut",
+      "featured": "En vedette",
+      "views": "Vues",
+      "date": "Date",
+      "status_draft": "Brouillon",
+      "status_published": "Publié",
+      "status_archived": "Archivé",
+      "yes": "Oui",
+      "no": "Non",
+      "summary": "Résumé",
+      "content": "Contenu",
+      "thumbnail": "Vignette",
+      "thumbnail_upload": "Télécharger un fichier",
+      "or_url": "ou coller l'URL",
+      "media_gallery": "Galerie multimédia",
+      "add_media": "Ajouter des fichiers multimédia",
+      "new_post": "Nouvel article",
+      "create_post": "Créer un article",
+      "creating": "Création...",
+      "is_featured": "Marquer comme en vedette"
+    },
+    "category": {
+      "name": "Nom",
+      "slug": "Slug",
+      "color": "Couleur",
+      "description": "Description",
+      "article_count": "Articles",
+      "add_new": "Ajouter une nouvelle catégorie"
+    },
+    "stock": {
+      "symbol": "Symbole",
+      "company": "Société",
+      "exchange": "Bourse",
+      "sector": "Secteur",
+      "price": "Prix",
+      "change": "Variation%",
+      "add_new": "Ajouter une nouvelle action",
+      "update_price": "Mettre à jour le prix"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "save": "Enregistrer les modifications",
+      "cancel": "Annuler",
+      "add": "Ajouter",
+      "update": "Mettre à jour",
+      "confirm_delete": "Êtes-vous sûr ? Cette action ne peut pas être annulée.",
+      "view_all": "Voir tout →"
+    },
+    "search_placeholder": "Rechercher...",
+    "filter_role": "Filtrer par rôle",
+    "filter_status": "Filtrer par statut",
+    "all_roles": "Tous les rôles",
+    "all_statuses": "Tous les statuts",
+    "no_users": "Aucun utilisateur trouvé.",
+    "no_posts": "Aucun article trouvé.",
+    "no_categories": "Aucune catégorie trouvée.",
+    "no_stocks": "Aucune action trouvée.",
+    "save_success": "Enregistré avec succès.",
+    "delete_success": "Supprimé avec succès.",
+    "error_load": "Échec du chargement des données."
+  },
+  "footer": {
+    "description": "Votre source de confiance pour les actualités boursières, l'analyse financière et les conseils d'investissement. Restez informé. Restez haussier.",
+    "navigation": "Navigation",
+    "topics": "Sujets",
+    "disclaimer": "Avertissement : Le contenu est uniquement à titre informatif. Pas de conseil financier.",
+    "all_rights": "Tous droits réservés.",
+    "topics_list": {
+      "market_news": "Actualités du marché",
+      "analysis": "Analyse",
+      "forex": "Forex",
+      "crypto": "Crypto",
+      "ipo": "IPO"
+    }
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "nav": {
+    "home": "首页",
+    "news": "新闻",
+    "stocks": "股票",
+    "markets": "市场",
+    "analysis": "分析",
+    "login": "登录",
+    "signup": "注册",
+    "logout": "退出",
+    "search_placeholder": "搜索新闻..."
+  },
+  "home": {
+    "latest_news": "最新新闻"
+  },
+  "featured": {
+    "title": "精选故事",
+    "view_all": "查看全部"
+  },
+  "news_list": {
+    "prev": "上一页",
+    "next": "下一页",
+    "no_articles": "未找到文章。",
+    "loading": "加载中..."
+  },
+  "sidebar": {
+    "market_overview": "市场概览",
+    "view_all_stocks": "查看所有股票 →",
+    "categories": "分类"
+  },
+  "stocks": {
+    "title": "股票市场",
+    "subtitle": "追踪您最喜欢的股票",
+    "search_placeholder": "搜索股票代码或公司...",
+    "scroll_hint": "横向滚动查看更多 →",
+    "table": {
+      "symbol": "代码",
+      "company": "公司",
+      "exchange": "交易所",
+      "sector": "行业",
+      "price": "价格",
+      "change": "涨跌",
+      "news": "新闻",
+      "view_news": "查看新闻",
+      "no_stocks": "未找到股票。"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "欢迎回来",
+      "subtitle": "登录您的账户",
+      "email": "邮箱",
+      "password": "密码",
+      "submit": "登录",
+      "no_account": "还没有账户？",
+      "signup_link": "立即注册",
+      "toast_success": "欢迎回来！",
+      "error_invalid_credentials": "邮箱或密码不正确"
+    },
+    "register": {
+      "title": "创建账户",
+      "subtitle": "加入牛市社区",
+      "full_name": "姓名",
+      "email": "邮箱",
+      "password": "密码",
+      "password_placeholder": "最少6个字符",
+      "confirm_password": "确认密码",
+      "confirm_placeholder": "重复您的密码",
+      "submit": "创建账户",
+      "has_account": "已有账户？",
+      "login_link": "立即登录",
+      "error_full_name_required": "姓名不能为空",
+      "error_password_mismatch": "两次密码不一致",
+      "error_password_short": "密码至少需要6个字符",
+      "toast_success": "账户创建成功！欢迎来到 ThanhDangBullish 🚀"
+    }
+  },
+  "admin": {
+    "panel": "管理面板",
+    "dashboard": "仪表盘",
+    "users": "用户",
+    "posts": "文章",
+    "categories": "分类",
+    "stocks": "股票",
+    "back_to_site": "← 返回网站",
+    "loading": "加载中...",
+    "stats": {
+      "users": "总用户数",
+      "articles": "总文章数",
+      "categories": "分类数",
+      "stocks": "股票数",
+      "total_views": "总浏览量"
+    },
+    "recent_users": "最近用户",
+    "recent_posts": "最近文章",
+    "user": {
+      "name": "姓名",
+      "email": "邮箱",
+      "role": "角色",
+      "status": "状态",
+      "joined": "加入时间",
+      "active": "活跃",
+      "inactive": "未活跃",
+      "enable": "启用",
+      "disable": "禁用",
+      "admin_readonly": "管理员账户不可修改",
+      "role_user": "用户",
+      "role_editor": "编辑",
+      "role_admin": "管理员"
+    },
+    "post": {
+      "title": "标题",
+      "author": "作者",
+      "category": "分类",
+      "status": "状态",
+      "featured": "精选",
+      "views": "浏览量",
+      "date": "日期",
+      "status_draft": "草稿",
+      "status_published": "已发布",
+      "status_archived": "已归档",
+      "yes": "是",
+      "no": "否",
+      "summary": "摘要",
+      "content": "内容",
+      "thumbnail": "缩略图",
+      "thumbnail_upload": "上传文件",
+      "or_url": "或粘贴URL",
+      "media_gallery": "媒体库",
+      "add_media": "添加媒体文件",
+      "new_post": "新文章",
+      "create_post": "创建文章",
+      "creating": "创建中...",
+      "is_featured": "标为精选"
+    },
+    "category": {
+      "name": "名称",
+      "slug": "别名",
+      "color": "颜色",
+      "description": "描述",
+      "article_count": "文章数",
+      "add_new": "添加新分类"
+    },
+    "stock": {
+      "symbol": "代码",
+      "company": "公司",
+      "exchange": "交易所",
+      "sector": "行业",
+      "price": "价格",
+      "change": "涨跌%",
+      "add_new": "添加新股票",
+      "update_price": "更新价格"
+    },
+    "actions": {
+      "edit": "编辑",
+      "delete": "删除",
+      "save": "保存更改",
+      "cancel": "取消",
+      "add": "添加",
+      "update": "更新",
+      "confirm_delete": "确定吗？此操作无法撤销。",
+      "view_all": "查看全部 →"
+    },
+    "search_placeholder": "搜索...",
+    "filter_role": "按角色筛选",
+    "filter_status": "按状态筛选",
+    "all_roles": "所有角色",
+    "all_statuses": "所有状态",
+    "no_users": "未找到用户。",
+    "no_posts": "未找到文章。",
+    "no_categories": "未找到分类。",
+    "no_stocks": "未找到股票。",
+    "save_success": "保存成功。",
+    "delete_success": "删除成功。",
+    "error_load": "数据加载失败。"
+  },
+  "footer": {
+    "description": "您可信赖的股市新闻、金融分析和投资见解来源。保持知情。保持看涨。",
+    "navigation": "导航",
+    "topics": "主题",
+    "disclaimer": "免责声明：内容仅供参考，不构成财务建议。",
+    "all_rights": "版权所有。",
+    "topics_list": {
+      "market_news": "市场新闻",
+      "analysis": "分析",
+      "forex": "外汇",
+      "crypto": "加密货币",
+      "ipo": "IPO"
+    }
+  }
+}

@@ -30,6 +30,17 @@ export interface Stock {
   last_updated?: string;
 }
 
+export interface MarketDataItem {
+  ticker: string;
+  price: number;
+  change: number;
+  changePct: number;
+  volume: number;
+  high: number;
+  low: number;
+  updatedAt: string;
+}
+
 export interface MediaItem {
   id: string;
   url: string;

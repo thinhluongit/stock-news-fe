@@ -1,18 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchStocks } from '../../store/slices/stockSlice';
-import { TrendingUp, TrendingDown, Search, Loader2 } from 'lucide-react';
+import { TrendingUp, TrendingDown, Search, Loader2, AlertCircle } from 'lucide-react';
 import { formatPrice } from '../../lib/utils';
 import { useLocale } from '../../i18n/LocaleContext';
+import { useMarketData } from '../../hooks/useMarketData';
+import PriceCell from '../../components/stocks/PriceCell';
 
 export default function StocksPage() {
   const dispatch = useAppDispatch();
-  const { stocks, loading } = useAppSelector((s) => s.stocks);
+  const { stocks, loading, marketDataError, lastFetched } = useAppSelector((s) => s.stocks);
   const { t } = useLocale();
   const [search, setSearch] = useState('');
 
@@ -20,11 +22,16 @@ export default function StocksPage() {
     dispatch(fetchStocks());
   }, [dispatch]);
 
+  const tickers = useMemo(() => stocks.map((s) => s.symbol), [stocks]);
+  const marketData = useMarketData(tickers);
+
   const filtered = stocks.filter(
     (s) =>
       s.symbol.toLowerCase().includes(search.toLowerCase()) ||
       s.company_name.toLowerCase().includes(search.toLowerCase())
   );
+
+  const lastUpdatedTime = lastFetched ? new Date(lastFetched).toLocaleTimeString() : null;
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
@@ -32,8 +39,21 @@ export default function StocksPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('stocks.title')}</h1>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{t('stocks.subtitle')}</p>
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('stocks.title')}</h1>
+              {lastFetched && !marketDataError && (
+                <span className="flex items-center gap-1.5 text-xs text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full">
+                  <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                  {t('stocks.live_badge')}
+                </span>
+              )}
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              {t('stocks.subtitle')}
+              {lastUpdatedTime && !marketDataError && (
+                <span className="ml-2 text-gray-500">· {t('stocks.last_updated')} {lastUpdatedTime}</span>
+              )}
+            </p>
           </div>
           <div className="relative w-full sm:w-64">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -46,6 +66,13 @@ export default function StocksPage() {
           </div>
         </div>
 
+        {marketDataError && (
+          <div className="flex items-center gap-2 text-sm text-amber-400 bg-amber-400/10 border border-amber-400/20 rounded-lg px-4 py-3 mb-6">
+            <AlertCircle size={16} className="shrink-0" />
+            {t('stocks.market_unavailable')}
+          </div>
+        )}
+
         {loading ? (
           <div className="flex justify-center items-center py-20">
             <Loader2 className="animate-spin text-green-400" size={32} />
@@ -54,7 +81,8 @@ export default function StocksPage() {
           <>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
               {filtered.slice(0, 4).map((s) => {
-                const isUp = Number(s.price_change_pct) >= 0;
+                const live = marketData[s.symbol];
+                const isUp = live ? live.changePct >= 0 : Number(s.price_change_pct) >= 0;
                 return (
                   <div key={s.id} className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4">
                     <div className="flex items-center justify-between mb-2">
@@ -63,10 +91,16 @@ export default function StocksPage() {
                         ? <TrendingUp size={16} className="text-green-400" />
                         : <TrendingDown size={16} className="text-red-400" />}
                     </div>
-                    <p className="text-lg font-bold text-gray-900 dark:text-white">{formatPrice(s.current_price)}</p>
-                    <p className={`text-xs mt-1 ${isUp ? 'text-green-400' : 'text-red-400'}`}>
-                      {isUp ? '+' : ''}{Number(s.price_change_pct).toFixed(2)}%
-                    </p>
+                    {live ? (
+                      <PriceCell price={live.price} change={live.change} changePct={live.changePct} />
+                    ) : (
+                      <>
+                        <p className="text-lg font-bold text-gray-900 dark:text-white">{formatPrice(s.current_price)}</p>
+                        <p className={`text-xs mt-1 ${isUp ? 'text-green-400' : 'text-red-400'}`}>
+                          {isUp ? '+' : ''}{Number(s.price_change_pct).toFixed(2)}%
+                        </p>
+                      </>
+                    )}
                   </div>
                 );
               })}
@@ -88,19 +122,38 @@ export default function StocksPage() {
                   </thead>
                   <tbody>
                     {filtered.map((stock) => {
-                      const isUp = Number(stock.price_change_pct) >= 0;
+                      const live = marketData[stock.symbol];
+                      const staticChangePct = Number(stock.price_change_pct);
+                      const changePct = live ? live.changePct : staticChangePct;
+                      const isUp = changePct >= 0;
                       return (
                         <tr key={stock.id} className="border-b border-gray-200/80 dark:border-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800/40 transition-colors">
                           <td className="px-5 py-4"><span className="font-mono font-bold text-green-400">{stock.symbol}</span></td>
                           <td className="px-5 py-4 text-gray-700 dark:text-gray-300">{stock.company_name}</td>
                           <td className="hidden sm:table-cell px-5 py-4 text-gray-600 dark:text-gray-400">{stock.exchange}</td>
                           <td className="hidden md:table-cell px-5 py-4 text-gray-600 dark:text-gray-400">{stock.sector}</td>
-                          <td className="px-5 py-4 text-right font-medium text-gray-900 dark:text-white">{formatPrice(stock.current_price)}</td>
+                          <td className="px-5 py-4 text-right">
+                            {live ? (
+                              <PriceCell
+                                price={live.price}
+                                change={live.change}
+                                changePct={live.changePct}
+                                size="sm"
+                                className="text-right"
+                              />
+                            ) : (
+                              <span className="font-medium text-gray-900 dark:text-white">{formatPrice(stock.current_price)}</span>
+                            )}
+                          </td>
                           <td className={`px-5 py-4 text-right font-medium ${isUp ? 'text-green-400' : 'text-red-400'}`}>
-                            <div className="flex items-center justify-end gap-1">
-                              {isUp ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
-                              {isUp ? '+' : ''}{Number(stock.price_change_pct).toFixed(2)}%
-                            </div>
+                            {live ? (
+                              <span className="text-gray-500 text-xs">—</span>
+                            ) : (
+                              <div className="flex items-center justify-end gap-1">
+                                {isUp ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
+                                {isUp ? '+' : ''}{staticChangePct.toFixed(2)}%
+                              </div>
+                            )}
                           </td>
                           <td className="px-5 py-4">
                             <Link href={`/news?search=${stock.symbol}`} className="text-xs text-green-400 hover:underline">{t('stocks.table.view_news')}</Link>

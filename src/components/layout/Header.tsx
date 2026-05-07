@@ -1,24 +1,46 @@
 'use client';
 
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout } from '../../store/slices/authSlice';
 import { useLocale } from '../../i18n/LocaleContext';
-import { TrendingUp, Search, Menu, X, LogOut, Sun, Moon } from 'lucide-react';
+import {
+  TrendingUp, Search, Menu, X, Sun, Moon,
+  User, LayoutDashboard, FilePlus, FileText, LogOut,
+} from 'lucide-react';
+import LanguageSwitcher from '../ui/LanguageSwitcher';
+
+function getInitials(name: string) {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
 
 export default function Header() {
   const dispatch = useAppDispatch();
-  const router   = useRouter();
-  const { user }  = useAppSelector((s) => s.auth);
-  const { t, locale, setLocale } = useLocale();
+  const router = useRouter();
+  const { user } = useAppSelector((s) => s.auth);
+  const { t } = useLocale();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function onClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, []);
 
   const NAV_LINKS = [
     { href: '/',                          label: t('nav.home') },
@@ -28,12 +50,19 @@ export default function Header() {
     { href: '/news?category=analysis',    label: t('nav.analysis') },
   ];
 
+  const isAdminOrEditor = user?.role === 'admin' || user?.role === 'editor';
+
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/news?search=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
     }
+  };
+
+  const handleLogout = () => {
+    setDropdownOpen(false);
+    dispatch(logout());
   };
 
   return (
@@ -76,13 +105,7 @@ export default function Header() {
           {/* Right */}
           <div className="flex items-center gap-2">
             {/* Language switcher */}
-            <button
-              onClick={() => setLocale(locale === 'en' ? 'vi' : 'en')}
-              className="text-xs font-semibold px-2 py-1.5 rounded-lg bg-gray-100 border border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:text-white dark:hover:border-gray-600 transition-colors"
-              aria-label="Switch language"
-            >
-              {locale === 'en' ? 'VI' : 'EN'}
-            </button>
+            <LanguageSwitcher />
 
             {/* Theme toggle */}
             <button
@@ -94,15 +117,70 @@ export default function Header() {
             </button>
 
             {user ? (
-              <div className="flex items-center gap-2">
-                <span className="hidden sm:block text-sm text-gray-700 dark:text-gray-300">{user.full_name}</span>
+              <div className="relative" ref={dropdownRef}>
+                {/* Avatar button */}
                 <button
-                  onClick={() => dispatch(logout())}
-                  className="flex items-center gap-1 text-sm text-gray-500 hover:text-red-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-red-400 dark:hover:bg-gray-800 transition-colors px-2 py-1.5 rounded-lg"
+                  onClick={() => setDropdownOpen((o) => !o)}
+                  aria-label="User menu"
+                  className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-transparent hover:ring-green-500 focus:outline-none focus:ring-green-500 transition-all"
                 >
-                  <LogOut size={16} />
-                  <span className="hidden sm:block">{t('nav.logout')}</span>
+                  {user.avatar_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={user.avatar_url} alt={user.full_name} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-green-500 flex items-center justify-center text-white text-xs font-bold select-none">
+                      {getInitials(user.full_name)}
+                    </div>
+                  )}
                 </button>
+
+                {/* Dropdown */}
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg py-1 z-50">
+                    {/* User info header */}
+                    <div className="px-4 py-2.5 border-b border-gray-100 dark:border-gray-800">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{user.full_name}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user.email}</p>
+                    </div>
+
+                    <Link href="/account" onClick={() => setDropdownOpen(false)}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
+                      <User size={15} className="text-gray-400 shrink-0" />
+                      Account Information
+                    </Link>
+
+                    {user.role === 'admin' && (
+                      <Link href="/admin" onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
+                        <LayoutDashboard size={15} className="text-gray-400 shrink-0" />
+                        Admin
+                      </Link>
+                    )}
+
+                    {isAdminOrEditor && (
+                      <>
+                        <Link href="/admin/posts/create" onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
+                          <FilePlus size={15} className="text-gray-400 shrink-0" />
+                          Create Post
+                        </Link>
+                        <Link href="/admin/posts" onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
+                          <FileText size={15} className="text-gray-400 shrink-0" />
+                          Manage Posts
+                        </Link>
+                      </>
+                    )}
+
+                    <div className="border-t border-gray-100 dark:border-gray-800 mt-1 pt-1">
+                      <button onClick={handleLogout}
+                        className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
+                        <LogOut size={15} className="shrink-0" />
+                        {t('nav.logout')}
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="flex items-center gap-2">
@@ -114,6 +192,7 @@ export default function Header() {
                 </Link>
               </div>
             )}
+
             <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>

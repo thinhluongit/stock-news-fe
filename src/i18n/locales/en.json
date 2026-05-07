@@ -33,6 +33,10 @@
     "subtitle": "Track your favourite stocks",
     "search_placeholder": "Search symbol or company...",
     "scroll_hint": "Scroll horizontally to see more →",
+    "live_badge": "Live",
+    "market_unavailable": "Market data temporarily unavailable",
+    "last_updated": "Updated",
+    "no_change": "Unchanged",
     "table": {
       "symbol": "Symbol",
       "company": "Company",
@@ -54,7 +58,8 @@
       "submit": "Sign In",
       "no_account": "Don't have an account?",
       "signup_link": "Sign up",
-      "toast_success": "Welcome back!"
+      "toast_success": "Welcome back!",
+      "error_invalid_credentials": "Incorrect email or password"
     },
     "register": {
       "title": "Create your account",
@@ -68,6 +73,7 @@
       "submit": "Create Account",
       "has_account": "Already have an account?",
       "login_link": "Sign in",
+      "error_full_name_required": "Full name is required",
       "error_password_mismatch": "Passwords do not match",
       "error_password_short": "Password must be at least 6 characters",
       "toast_success": "Account created! Welcome to ThanhDangBullish 🚀"

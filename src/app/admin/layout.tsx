@@ -5,13 +5,14 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAppSelector } from '../../store/hooks';
 import { useLocale } from '../../i18n/LocaleContext';
+import LanguageSwitcher from '../../components/ui/LanguageSwitcher';
 import { TrendingUp, LayoutDashboard, Users, FileText, Tag, BarChart2, ExternalLink, Loader2 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router    = useRouter();
   const pathname  = usePathname();
   const { user, initialized } = useAppSelector((s) => s.auth);
-  const { t, locale, setLocale } = useLocale();
+  const { t } = useLocale();
 
   useEffect(() => {
     if (!initialized) return;
@@ -88,12 +89,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {user.full_name} <span className="text-gray-400 dark:text-gray-600">·</span>{' '}
             <span className="text-xs text-green-400 uppercase">{user.role}</span>
           </span>
-          <button
-            onClick={() => setLocale(locale === 'en' ? 'vi' : 'en')}
-            className="text-xs font-semibold px-2 py-1.5 rounded-lg bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-          >
-            {locale === 'en' ? 'VI' : 'EN'}
-          </button>
+          <LanguageSwitcher />
         </header>
 
         {/* Content */}

@@ -89,3 +89,9 @@ Path alias `@/*` maps to `src/*` (configured in `tsconfig.json`).
 ## Rules
 
 @docs/rules/images.md
+
+## Plans and Reports
+
+Always save `.md` files inside the project folder — never only to the global `~/.claude/plans/` directory:
+- Plans → `docs/plans/<topic>.md`
+- Reports / research / guides → `docs/reports/<topic>.md`

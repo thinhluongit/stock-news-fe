@@ -3,10 +3,25 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import en from './locales/en.json';
 import vi from './locales/vi.json';
+import fr from './locales/fr.json';
+import zh from './locales/zh.json';
+import ko from './locales/ko.json';
+import ja from './locales/ja.json';
 
-export type Locale = 'en' | 'vi';
+export type Locale = 'en' | 'vi' | 'fr' | 'zh' | 'ko' | 'ja';
 
-const messages: Record<Locale, Record<string, unknown>> = { en, vi };
+export const LOCALES: { code: Locale; countryCode: string; name: string }[] = [
+  { code: 'en', countryCode: 'us', name: 'English' },
+  { code: 'vi', countryCode: 'vn', name: 'Tiếng Việt' },
+  { code: 'fr', countryCode: 'fr', name: 'Français' },
+  { code: 'zh', countryCode: 'cn', name: '中文' },
+  { code: 'ko', countryCode: 'kr', name: '한국어' },
+  { code: 'ja', countryCode: 'jp', name: '日本語' },
+];
+
+const VALID_LOCALES = LOCALES.map((l) => l.code);
+
+const messages: Record<Locale, Record<string, unknown>> = { en, vi, fr, zh, ko, ja };
 
 interface LocaleContextType {
   locale: Locale;
@@ -30,7 +45,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const saved = localStorage.getItem('locale') as Locale | null;
-      if (saved === 'en' || saved === 'vi') setLocaleState(saved);
+      if (saved && VALID_LOCALES.includes(saved)) setLocaleState(saved);
     } catch {
       // localStorage unavailable (SSR guard)
     }

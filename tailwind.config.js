@@ -25,11 +25,21 @@ module.exports = {
       },
       animation: {
         marquee: 'marquee 30s linear infinite',
+        'flash-green': 'flashGreen 0.6s ease-out forwards',
+        'flash-red':   'flashRed 0.6s ease-out forwards',
       },
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        flashGreen: {
+          '0%':   { backgroundColor: 'rgba(34, 197, 94, 0.25)' },
+          '100%': { backgroundColor: 'transparent' },
+        },
+        flashRed: {
+          '0%':   { backgroundColor: 'rgba(239, 68, 68, 0.25)' },
+          '100%': { backgroundColor: 'transparent' },
         },
       },
     },

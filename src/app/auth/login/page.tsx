@@ -60,7 +60,7 @@ export default function LoginPage() {
 
             {error && (
               <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm px-4 py-3 rounded-lg">
-                {error}
+                {error === 'invalid_credentials' ? t('auth.login.error_invalid_credentials') : error}
               </div>
             )}
 

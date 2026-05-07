@@ -23,7 +23,7 @@ api.interceptors.response.use(
     // Skip redirect for /auth/me — fetchCurrentUser.rejected already handles
     // the "no token" case by setting initialized=true without navigating.
     // Redirecting here would cause an infinite reload loop on public pages.
-    if (status === 401 && typeof window !== 'undefined' && !url.includes('/auth/me')) {
+    if (status === 401 && typeof window !== 'undefined' && !url.includes('/auth/me') && !url.includes('/auth/login')) {
       localStorage.removeItem('token');
       window.location.href = '/auth/login';
     }
@@ -61,6 +61,7 @@ export const stockApi = {
   create:       (data: unknown)                    => api.post('/stocks', data),
   updatePrice:  (symbol: string, data: unknown)    => api.patch(`/stocks/${symbol}/price`, data),
   remove:       (symbol: string)                   => api.delete(`/stocks/${symbol}`),
+  marketData:   (tickers: string)                  => api.get('/stocks/market-data', { params: { tickers } }),
 };
 
 export const adminApi = {

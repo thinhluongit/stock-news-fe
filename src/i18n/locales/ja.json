@@ -1,0 +1,191 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "news": "ニュース",
+    "stocks": "株式",
+    "markets": "市場",
+    "analysis": "分析",
+    "login": "ログイン",
+    "signup": "登録",
+    "logout": "ログアウト",
+    "search_placeholder": "ニュースを検索..."
+  },
+  "home": {
+    "latest_news": "最新ニュース"
+  },
+  "featured": {
+    "title": "注目の記事",
+    "view_all": "すべて見る"
+  },
+  "news_list": {
+    "prev": "前へ",
+    "next": "次へ",
+    "no_articles": "記事が見つかりません。",
+    "loading": "読み込み中..."
+  },
+  "sidebar": {
+    "market_overview": "市場概況",
+    "view_all_stocks": "すべての株を見る →",
+    "categories": "カテゴリ"
+  },
+  "stocks": {
+    "title": "株式市場",
+    "subtitle": "お気に入りの株を追跡する",
+    "search_placeholder": "ティッカーまたは会社名で検索...",
+    "scroll_hint": "横にスクロールして詳細を確認 →",
+    "table": {
+      "symbol": "ティッカー",
+      "company": "会社",
+      "exchange": "取引所",
+      "sector": "セクター",
+      "price": "価格",
+      "change": "変動",
+      "news": "ニュース",
+      "view_news": "ニュースを見る",
+      "no_stocks": "株が見つかりません。"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "おかえりなさい",
+      "subtitle": "アカウントにサインインする",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "submit": "サインイン",
+      "no_account": "アカウントをお持ちでないですか？",
+      "signup_link": "登録する",
+      "toast_success": "おかえりなさい！",
+      "error_invalid_credentials": "メールアドレスまたはパスワードが正しくありません"
+    },
+    "register": {
+      "title": "アカウントを作成",
+      "subtitle": "強気コミュニティに参加する",
+      "full_name": "氏名",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "password_placeholder": "最低6文字",
+      "confirm_password": "パスワードの確認",
+      "confirm_placeholder": "パスワードを繰り返してください",
+      "submit": "アカウントを作成",
+      "has_account": "すでにアカウントをお持ちですか？",
+      "login_link": "サインイン",
+      "error_full_name_required": "氏名は必須です",
+      "error_password_mismatch": "パスワードが一致しません",
+      "error_password_short": "パスワードは6文字以上必要です",
+      "toast_success": "アカウントが作成されました！ThanhDangBullishへようこそ 🚀"
+    }
+  },
+  "admin": {
+    "panel": "管理パネル",
+    "dashboard": "ダッシュボード",
+    "users": "ユーザー",
+    "posts": "投稿",
+    "categories": "カテゴリ",
+    "stocks": "株式",
+    "back_to_site": "← サイトに戻る",
+    "loading": "読み込み中...",
+    "stats": {
+      "users": "総ユーザー数",
+      "articles": "総記事数",
+      "categories": "カテゴリ数",
+      "stocks": "株数",
+      "total_views": "総閲覧数"
+    },
+    "recent_users": "最近のユーザー",
+    "recent_posts": "最近の投稿",
+    "user": {
+      "name": "名前",
+      "email": "メールアドレス",
+      "role": "役割",
+      "status": "ステータス",
+      "joined": "登録日",
+      "active": "アクティブ",
+      "inactive": "非アクティブ",
+      "enable": "有効化",
+      "disable": "無効化",
+      "admin_readonly": "管理者アカウントは変更できません",
+      "role_user": "ユーザー",
+      "role_editor": "編集者",
+      "role_admin": "管理者"
+    },
+    "post": {
+      "title": "タイトル",
+      "author": "著者",
+      "category": "カテゴリ",
+      "status": "ステータス",
+      "featured": "注目",
+      "views": "閲覧数",
+      "date": "日付",
+      "status_draft": "下書き",
+      "status_published": "公開済み",
+      "status_archived": "アーカイブ済み",
+      "yes": "はい",
+      "no": "いいえ",
+      "summary": "概要",
+      "content": "本文",
+      "thumbnail": "サムネイル",
+      "thumbnail_upload": "ファイルをアップロード",
+      "or_url": "またはURLを貼り付ける",
+      "media_gallery": "メディアギャラリー",
+      "add_media": "メディアファイルを追加",
+      "new_post": "新規投稿",
+      "create_post": "投稿を作成",
+      "creating": "作成中...",
+      "is_featured": "注目としてマーク"
+    },
+    "category": {
+      "name": "名前",
+      "slug": "スラッグ",
+      "color": "カラー",
+      "description": "説明",
+      "article_count": "記事数",
+      "add_new": "新しいカテゴリを追加"
+    },
+    "stock": {
+      "symbol": "ティッカー",
+      "company": "会社",
+      "exchange": "取引所",
+      "sector": "セクター",
+      "price": "価格",
+      "change": "変動%",
+      "add_new": "新しい株を追加",
+      "update_price": "価格を更新"
+    },
+    "actions": {
+      "edit": "編集",
+      "delete": "削除",
+      "save": "変更を保存",
+      "cancel": "キャンセル",
+      "add": "追加",
+      "update": "更新",
+      "confirm_delete": "本当に削除しますか？この操作は元に戻せません。",
+      "view_all": "すべて見る →"
+    },
+    "search_placeholder": "検索...",
+    "filter_role": "役割でフィルター",
+    "filter_status": "ステータスでフィルター",
+    "all_roles": "すべての役割",
+    "all_statuses": "すべてのステータス",
+    "no_users": "ユーザーが見つかりません。",
+    "no_posts": "投稿が見つかりません。",
+    "no_categories": "カテゴリが見つかりません。",
+    "no_stocks": "株が見つかりません。",
+    "save_success": "正常に保存されました。",
+    "delete_success": "正常に削除されました。",
+    "error_load": "データの読み込みに失敗しました。"
+  },
+  "footer": {
+    "description": "株式市場ニュース、金融分析、投資インサイトの信頼できる情報源。情報を得てください。強気を保ちましょう。",
+    "navigation": "ナビゲーション",
+    "topics": "トピック",
+    "disclaimer": "免責事項：コンテンツは情報提供のみを目的としています。財務アドバイスではありません。",
+    "all_rights": "無断転載禁止。",
+    "topics_list": {
+      "market_news": "市場ニュース",
+      "analysis": "分析",
+      "forex": "外国為替",
+      "crypto": "仮想通貨",
+      "ipo": "IPO"
+    }
+  }
+}
