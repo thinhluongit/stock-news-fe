@@ -86,4 +86,23 @@ export const postsApi = {
   remove:       (id: string)                       => api.delete(`/posts/${id}`),
 };
 
+export const engagementApi = {
+  toggleLike:        (articleId: string) => api.post(`/news/${articleId}/like`),
+  getLike:           (articleId: string) => api.get(`/news/${articleId}/like`),
+  toggleBookmark:    (articleId: string) => api.post(`/news/${articleId}/bookmark`),
+  getBookmark:       (articleId: string) => api.get(`/news/${articleId}/bookmark`),
+  getBookmarks:      (params?: Record<string, unknown>) => api.get('/me/bookmarks', { params }),
+  getComments:       (articleId: string, params?: Record<string, unknown>) =>
+    api.get(`/news/${articleId}/comments`, { params }),
+  getReplies:        (commentId: string) => api.get(`/comments/${commentId}/replies`),
+  createComment:     (articleId: string, body: string, parent_id?: string | null) =>
+    api.post(`/news/${articleId}/comments`, { body, parent_id: parent_id ?? null }),
+  updateComment:     (commentId: string, body: string) =>
+    api.patch(`/comments/${commentId}`, { body }),
+  deleteComment:     (commentId: string) => api.delete(`/comments/${commentId}`),
+  toggleCommentLike: (commentId: string) => api.post(`/comments/${commentId}/like`),
+  trackShare:        (articleId: string, platform: string) =>
+    api.post(`/news/${articleId}/share`, { platform }),
+};
+
 export default api;

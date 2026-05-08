@@ -9,7 +9,7 @@ import { logout } from '../../store/slices/authSlice';
 import { useLocale } from '../../i18n/LocaleContext';
 import {
   TrendingUp, Search, Menu, X, Sun, Moon,
-  User, LayoutDashboard, FilePlus, FileText, LogOut,
+  User, LayoutDashboard, FilePlus, FileText, LogOut, Bookmark,
 } from 'lucide-react';
 import LanguageSwitcher from '../ui/LanguageSwitcher';
 
@@ -147,6 +147,12 @@ export default function Header() {
                       className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
                       <User size={15} className="text-gray-400 shrink-0" />
                       Account Information
+                    </Link>
+
+                    <Link href="/profile/bookmarks" onClick={() => setDropdownOpen(false)}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
+                      <Bookmark size={15} className="text-gray-400 shrink-0" />
+                      Saved Articles
                     </Link>
 
                     {user.role === 'admin' && (

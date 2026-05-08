@@ -62,9 +62,53 @@ export interface Article {
   doc_status: 0 | 1 | 2;
   is_featured?: boolean;
   views?: number;
+  like_count?: number;
+  comment_count?: number;
+  share_count?: number;
+  is_liked_by_me?: boolean;
+  is_bookmarked_by_me?: boolean;
   published_at?: string;
   created_at?: string;
   updated_at?: string;
+}
+
+export interface EngagementCounts {
+  views: number;
+  likes: number;
+  comments: number;
+  shares: number;
+}
+
+export interface ArticleLike {
+  article_id: string;
+  liked: boolean;
+  total_likes: number;
+}
+
+export interface ArticleBookmark {
+  article_id: string;
+  bookmarked: boolean;
+}
+
+export interface Comment {
+  id: string;
+  article_id: string;
+  author: Pick<User, 'id' | 'full_name' | 'avatar_url'> | null;
+  body: string;
+  parent_id: string | null;
+  replies?: Comment[];
+  like_count: number;
+  is_liked_by_me: boolean;
+  is_edited: boolean;
+  is_deleted?: boolean;
+  reply_count?: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CommentPage {
+  data: Comment[];
+  pagination: Pagination;
 }
 
 export const DOC_STATUS_LABEL: Record<0 | 1 | 2, string> = {

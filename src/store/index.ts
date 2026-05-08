@@ -4,14 +4,16 @@ import newsReducer from './slices/newsSlice';
 import stockReducer from './slices/stockSlice';
 import adminReducer from './slices/adminSlice';
 import postsReducer from './slices/postsSlice';
+import engagementReducer from './slices/engagementSlice';
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
-    news: newsReducer,
-    stocks: stockReducer,
-    admin: adminReducer,
-    posts: postsReducer,
+    auth:       authReducer,
+    news:       newsReducer,
+    stocks:     stockReducer,
+    admin:      adminReducer,
+    posts:      postsReducer,
+    engagement: engagementReducer,
   },
 });
 
